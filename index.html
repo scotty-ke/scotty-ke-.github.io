@@ -155,6 +155,84 @@
           <div id="js-content" class="content-ll">
             
   
+    <article id="post-MD5加密的两个方法区别" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2017/09/21/MD5加密的两个方法区别/">MD5加密的两个方法区别(有坑)</a>
+    </h1>
+  
+
+        
+        <a href="/2017/09/21/MD5加密的两个方法区别/" class="archive-article-date">
+  	<time datetime="2017-09-21T06:43:43.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2017-09-21</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>在开发中，我们经常会用到MD5对一些数据进行简单加密，在之前一直用的是下面这个方法：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line">+ (NSString *)getMd5_32Bit:(NSString *)pwd</div><div class="line">&#123; </div><div class="line">    const char *cStr = [pwd UTF8String];</div><div class="line">    unsigned char digest[CC_MD5_DIGEST_LENGTH];</div><div class="line">    CC_MD5( cStr, (CC_LONG)pwd.length, digest );</div><div class="line">    NSMutableString *result = [NSMutableString stringWithCapacity:CC_MD5_DIGEST_LENGTH * 2];</div><div class="line">    for(int i = 0; i &lt; CC_MD5_DIGEST_LENGTH; i++)</div><div class="line">        [result appendFormat:@&quot;%02x&quot;, digest[i]];</div><div class="line">    return result;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>&nbsp; &nbsp; &nbsp; &nbsp;这种方法，对数字和字母一类的加密,是可以使用的，但是如果遇到汉字或者类似“\0”这种特殊字符就跪了，你会加密出来的怎么都不对，这时候就要用下面这种方法：<br><figure class="highlight plain"><figcaption><span>(NSString *)getMd5:(NSString *)string</span></figcaption><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line">&#123;</div><div class="line">    NSData *data = [string dataUsingEncoding:NSUTF8StringEncoding];</div><div class="line">    const char *cStr = (char *)data.bytes;</div><div class="line">    unsigned char digest[CC_MD5_DIGEST_LENGTH];</div><div class="line">    CC_MD5( cStr, (CC_LONG)data.length, digest );</div><div class="line">    NSMutableString *result = [NSMutableString stringWithCapacity:CC_MD5_DIGEST_LENGTH * 2];</div><div class="line">    for(int i = 0; i &lt; CC_MD5_DIGEST_LENGTH; i++)</div><div class="line">        [result appendFormat:@&quot;%02x&quot;, digest[i]];</div><div class="line">    return result;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>&nbsp; &nbsp; &nbsp; &nbsp;上面这两种方法，看上去没有什么区别，只不过一个是NSString，一个是NSData。但是在OC中，苹果对汉字的长度做了处理，原来一个中文占了3个字节，使用 length 的时候，获取到的汉字长度是1.这样就导致加密出来的结果不一样.  </p>
+<p>&nbsp; &nbsp; &nbsp; &nbsp;后来测试过在第一个方法中，把CC_MD5( cStr, (CC_LONG)pwd.length, digest );改为CC_MD5( cStr, (CC_LONG)strlen(cStr), digest );这样也能实现对汉字的加密，这也进一步证明对长度的获取应该用c的方法。  </p>
+<p>最后附上原文链接<a href="http://qiufeng.me/md5" target="_blank" rel="external">iOS 下关于 MD5 的那个坑</a></p>
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">iOS</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2017/09/21/MD5加密的两个方法区别/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+  
     <article id="post-First-Blog" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
     
@@ -394,6 +472,10 @@ getOwnMetadataKeys:function(t){return o(i(t),arguments.length<2?void 0:u(argumen
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color3">随笔</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">iOS</a>
               </li>
             
             <div class="clearfix"></div>
