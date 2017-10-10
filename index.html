@@ -153,6 +153,84 @@
           <div id="js-content" class="content-ll">
             
   
+    <article id="post-iOS-跳转代码的整理" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2017/10/10/iOS-跳转代码的整理/">iOS 跳转代码的整理</a>
+    </h1>
+  
+
+        
+        <a href="/2017/10/10/iOS-跳转代码的整理/" class="archive-article-date">
+  	<time datetime="2017-10-10T02:33:36.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2017-10-10</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>最近项目中用到了一种用Manager类来管理跳转的方法，记录整理一下。</p>
+<p>在iOS中通过系统自带的push操作，让控制器入栈，这样可以实现控制器一层一层的推进，这种情况下如果我们想要返回某个特定的控制器的时候，可以根据下标来获取navigationController.Viewcontrollers中相应的控制器，然后调用popToViewController:&lt;#(nonnull UIViewController *)#&gt; animated:&lt;#(BOOL)#&gt;来达到跳转到特定控制器的目的，但是这样每次都需要比对入栈的控制器的顺序，并不是很方便。这个时候可以有下面两种方法解决这种情况：  </p>
+<p>  第一种：用一个Manager类来管理跳转，在类里面写一个记录起始控制器的属性fromViewController,在子类里面写管理跳转的方法，每次调用跳转方法的时候，给这个属性赋值，在需要pop的地方，也通过这个类来实现跳转，因为在这个类里面可以拿到这个锚点控制器，在Manager类里面需要声明一个起始控制器<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">   @interface JumpItem : NSObject  </div><div class="line">  /*</div><div class="line"> 上一层的控制器. 部分跳转效果需要直接回到这个控制器</div><div class="line"> */</div><div class="line">@property (nonatomic,weak) UIViewController *fromViewController;</div></pre></td></tr></table></figure></p>
+<p>在子类中写各种控制跳转的方法,.h中方法声明<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">//跳转进detail</div><div class="line">- (void)jumpToDetailWithfromViewController:(UIViewController *)fromViewController</div><div class="line">                                      Type:(appointmentType)type</div><div class="line">                                 appointID:(NSString *)appointID;</div></pre></td></tr></table></figure></p>
+<p> .m方法实现 </p>
+ <figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div></pre></td><td class="code"><pre><div class="line"> - (void)jumpToDetailWithfromViewController:(UIViewController *)fromViewController</div><div class="line">                                      Type:(appointmentType)type</div><div class="line">                                 appointID:(NSString *)appointID</div><div class="line">&#123;</div><div class="line">    self.fromViewController = fromViewController;</div><div class="line">    </div><div class="line">    if(type == TXAppointment)</div><div class="line">    &#123;</div><div class="line">        TXAppointDetailViewController *TXDetail = [[TXAppointDetailViewController alloc] init];</div><div class="line">        </div><div class="line">        TXDetail.transferId = appointID;</div><div class="line">        </div><div class="line">        TXDetail.delegate = self;</div><div class="line">        </div><div class="line">        [self.fromViewController.navigationController pushViewController:TXDetail animated:YES];</div><div class="line">    &#125;else</div><div class="line">    &#123;</div><div class="line">        GHAppointMentDetailViewController *GHDetail = [[GHAppointMentDetailViewController alloc] init];</div><div class="line">        </div><div class="line">        GHDetail.AppointId = appointID;</div><div class="line">        </div><div class="line">        GHDetail.delegate = self;</div><div class="line">        </div><div class="line">        [self.fromViewController.navigationController pushViewController:GHDetail animated:YES];</div><div class="line">        </div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p> 如果需要做通过Manager类来控制POP操作，就在其实控制器中写一个控制返回的代理，在Manager里面实现该方法就行了<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"> - (void)popToRoot</div><div class="line">&#123;</div><div class="line">    [self.fromViewController.navigationController popToViewController:self.fromViewController animated:YES];</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>这样在用的时候，直接通过实例化Manager子类对象，然后调用相应的方法就可以了<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">if(!self.appointJump)</div><div class="line">       &#123;</div><div class="line">           self.appointJump = [[AppointmentJump alloc] init];</div><div class="line">       &#125;</div><div class="line">       [self.appointJump jumpToDetailWithfromViewController:self Type:GHAppointment appointID:busID];</div></pre></td></tr></table></figure></p>
+<p>还有一种方法是可以替换navigationController的viewControllers数组，通过- (void)setViewControllers:(NSArray<uiviewcontroller *=""> *)viewControllers animated:(BOOL)animated这个方法，更改数组里的元素，来实现页面的跳转分离。</uiviewcontroller></p>
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">iOS</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+  
     <article id="post-MD5加密的两个方法区别" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
     
@@ -453,11 +531,11 @@ getOwnMetadataKeys:function(t){return o(i(t),arguments.length<2?void 0:u(argumen
           <ul class="article-tag-list" q-show="showTags">
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">iOS</a>
+                <a href="javascript:void(0)" class="js-tag color3">随笔</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">随笔</a>
+                <a href="javascript:void(0)" class="js-tag color4">iOS</a>
               </li>
             
             <div class="clearfix"></div>
