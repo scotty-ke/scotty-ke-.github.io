@@ -247,31 +247,14 @@
     <div class="article-entry" itemprop="articleBody">
       
         <p>最近在学习swift，学习到闭包的时候，了解到跟OC中的block是一个东西，既然是一个东西，那肯定会存在循环引用的问题，所以找了点资料总结了一下block和闭包的循环引用的解决办法，记录一下。  </p>
-<p>在OC中 有两种方法来解决block的循环引用    </p>
-<p>####方法一</p>
+<p>在OC中 有两种方法来解决block的循环引用<br>  方法一</p>
 <blockquote>
 <p>__weak typeof(self) weekSelf = self;(打断循环引用链条)  </p>
 </blockquote>
-<p>用这种方法 对象释放后，weakSelf会自动置为nil </p>
-<p>####方法二 </p>
-<blockquote>
-<p>__unsafe_unretained typeof(self) weakSelf = self;  </p>
-</blockquote>
-<p>同方法一不同，当对象释放后，不会将weakSelf指向nil 而是会指向一块废弃的存储空间（即野指针）  </p>
-<p>在swift中也有两种方法，同OC一样，只不过写法不一样<br>第一种的写法为</p>
-<blockquote>
-<p>weak var weakSelf = self</p>
-</blockquote>
-<p>当对象释放以后，weakSelf会自动变成nil,因为weakSelf可能为空，所以在swift中，他是一个可选项</p>
-<p>第二种的写法为</p>
-<blockquote>
-<p>unowned var weakSelf = self</p>
-</blockquote>
-<p>在swift中，还有一种方法焦作捕获列表，就是在调用闭包的时候，在形参前面通过[]指定捕获对象，写法如下</p>
-<blockquote>
-<p>circleBlock = { <code>[unowned self]</code> () -&gt;() in<br>            self.view.backgroundColor = UIColor.red;<br>        }</p>
-</blockquote>
-
+<p>用这种方法 对象释放后，weakSelf会自动置为nil<br>
+        
+          <a class="article-more-a" href="/2017/10/13/swift中闭包的循环引用/#more">more >></a>
+        
       
 
       
@@ -343,13 +326,9 @@
         <p>最近项目中用到了一种用Manager类来管理跳转的方法，记录整理一下。</p>
 <p>在iOS中通过系统自带的push操作，让控制器入栈，这样可以实现控制器一层一层的推进，这种情况下如果我们想要返回某个特定的控制器的时候，可以根据下标来获取navigationController.Viewcontrollers中相应的控制器，然后调用popToViewController:&lt;#(nonnull UIViewController *)#&gt; animated:&lt;#(BOOL)#&gt;来达到跳转到特定控制器的目的，但是这样每次都需要比对入栈的控制器的顺序，并不是很方便。这个时候可以有下面两种方法解决这种情况：  </p>
 <p>  第一种：用一个Manager类来管理跳转，在类里面写一个记录起始控制器的属性fromViewController,在子类里面写管理跳转的方法，每次调用跳转方法的时候，给这个属性赋值，在需要pop的地方，也通过这个类来实现跳转，因为在这个类里面可以拿到这个锚点控制器，在Manager类里面需要声明一个起始控制器<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">   @interface JumpItem : NSObject  </div><div class="line">  /*</div><div class="line"> 上一层的控制器. 部分跳转效果需要直接回到这个控制器</div><div class="line"> */</div><div class="line">@property (nonatomic,weak) UIViewController *fromViewController;</div></pre></td></tr></table></figure></p>
-<p>在子类中写各种控制跳转的方法,.h中方法声明<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">//跳转进detail</div><div class="line">- (void)jumpToDetailWithfromViewController:(UIViewController *)fromViewController</div><div class="line">                                      Type:(appointmentType)type</div><div class="line">                                 appointID:(NSString *)appointID;</div></pre></td></tr></table></figure></p>
-<p> .m方法实现 </p>
- <figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div></pre></td><td class="code"><pre><div class="line"> - (void)jumpToDetailWithfromViewController:(UIViewController *)fromViewController</div><div class="line">                                      Type:(appointmentType)type</div><div class="line">                                 appointID:(NSString *)appointID</div><div class="line">&#123;</div><div class="line">    self.fromViewController = fromViewController;</div><div class="line">    </div><div class="line">    if(type == TXAppointment)</div><div class="line">    &#123;</div><div class="line">        TXAppointDetailViewController *TXDetail = [[TXAppointDetailViewController alloc] init];</div><div class="line">        </div><div class="line">        TXDetail.transferId = appointID;</div><div class="line">        </div><div class="line">        TXDetail.delegate = self;</div><div class="line">        </div><div class="line">        [self.fromViewController.navigationController pushViewController:TXDetail animated:YES];</div><div class="line">    &#125;else</div><div class="line">    &#123;</div><div class="line">        GHAppointMentDetailViewController *GHDetail = [[GHAppointMentDetailViewController alloc] init];</div><div class="line">        </div><div class="line">        GHDetail.AppointId = appointID;</div><div class="line">        </div><div class="line">        GHDetail.delegate = self;</div><div class="line">        </div><div class="line">        [self.fromViewController.navigationController pushViewController:GHDetail animated:YES];</div><div class="line">        </div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<p> 如果需要做通过Manager类来控制POP操作，就在其实控制器中写一个控制返回的代理，在Manager里面实现该方法就行了<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"> - (void)popToRoot</div><div class="line">&#123;</div><div class="line">    [self.fromViewController.navigationController popToViewController:self.fromViewController animated:YES];</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
-<p>这样在用的时候，直接通过实例化Manager子类对象，然后调用相应的方法就可以了<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">if(!self.appointJump)</div><div class="line">       &#123;</div><div class="line">           self.appointJump = [[AppointmentJump alloc] init];</div><div class="line">       &#125;</div><div class="line">       [self.appointJump jumpToDetailWithfromViewController:self Type:GHAppointment appointID:busID];</div></pre></td></tr></table></figure></p>
-<p>还有一种方法是可以替换navigationController的viewControllers数组，通过- (void)setViewControllers:(NSArray<uiviewcontroller *=""> *)viewControllers animated:(BOOL)animated这个方法，更改数组里的元素，来实现页面的跳转分离。</uiviewcontroller></p>
-
+        
+          <a class="article-more-a" href="/2017/10/10/iOS-跳转代码的整理/#more">more >></a>
+        
       
 
       
@@ -419,11 +398,9 @@
     <div class="article-entry" itemprop="articleBody">
       
         <p>在开发中，我们经常会用到MD5对一些数据进行简单加密，在之前一直用的是下面这个方法：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line">+ (NSString *)getMd5_32Bit:(NSString *)pwd</div><div class="line">&#123; </div><div class="line">    const char *cStr = [pwd UTF8String];</div><div class="line">    unsigned char digest[CC_MD5_DIGEST_LENGTH];</div><div class="line">    CC_MD5( cStr, (CC_LONG)pwd.length, digest );</div><div class="line">    NSMutableString *result = [NSMutableString stringWithCapacity:CC_MD5_DIGEST_LENGTH * 2];</div><div class="line">    for(int i = 0; i &lt; CC_MD5_DIGEST_LENGTH; i++)</div><div class="line">        [result appendFormat:@&quot;%02x&quot;, digest[i]];</div><div class="line">    return result;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
-<p>&nbsp; &nbsp; &nbsp; &nbsp;这种方法，对数字和字母一类的加密,是可以使用的，但是如果遇到汉字或者类似“\0”这种特殊字符就跪了，你会加密出来的怎么都不对，这时候就要用下面这种方法：<br><figure class="highlight plain"><figcaption><span>(NSString *)getMd5:(NSString *)string</span></figcaption><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line">&#123;</div><div class="line">    NSData *data = [string dataUsingEncoding:NSUTF8StringEncoding];</div><div class="line">    const char *cStr = (char *)data.bytes;</div><div class="line">    unsigned char digest[CC_MD5_DIGEST_LENGTH];</div><div class="line">    CC_MD5( cStr, (CC_LONG)data.length, digest );</div><div class="line">    NSMutableString *result = [NSMutableString stringWithCapacity:CC_MD5_DIGEST_LENGTH * 2];</div><div class="line">    for(int i = 0; i &lt; CC_MD5_DIGEST_LENGTH; i++)</div><div class="line">        [result appendFormat:@&quot;%02x&quot;, digest[i]];</div><div class="line">    return result;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
-<p>&nbsp; &nbsp; &nbsp; &nbsp;上面这两种方法，看上去没有什么区别，只不过一个是NSString，一个是NSData。但是在OC中，苹果对汉字的长度做了处理，原来一个中文占了3个字节，使用 length 的时候，获取到的汉字长度是1.这样就导致加密出来的结果不一样.  </p>
-<p>&nbsp; &nbsp; &nbsp; &nbsp;后来测试过在第一个方法中，把CC_MD5( cStr, (CC_LONG)pwd.length, digest );改为CC_MD5( cStr, (CC_LONG)strlen(cStr), digest );这样也能实现对汉字的加密，这也进一步证明对长度的获取应该用c的方法。  </p>
-<p>最后附上原文链接<a href="http://qiufeng.me/md5" target="_blank" rel="external">iOS 下关于 MD5 的那个坑</a></p>
-
+        
+          <a class="article-more-a" href="/2017/09/21/MD5加密的两个方法区别/#more">more >></a>
+        
       
 
       
@@ -702,15 +679,15 @@ getOwnMetadataKeys:function(t){return o(i(t),arguments.length<2?void 0:u(argumen
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">swift</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color4">iOS</a>
               </li>
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color2">iOS 笔记</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">swift</a>
               </li>
             
             <div class="clearfix"></div>
