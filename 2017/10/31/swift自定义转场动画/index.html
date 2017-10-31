@@ -15,7 +15,7 @@
 <meta property="og:url" content="https://scotty-ke.github.io/2017/10/31/swift自定义转场动画/index.html">
 <meta property="og:site_name" content="我的博客">
 <meta property="og:description" content="使用自定义转场步骤:1.设置被弹出控制器转场的代理属性 - transitioningDelegate1234let menuVC = PopoverViewController()//设置转场动画的代理menuVC.transitioningDelegate = animateDelegate 2.设置被弹出控制器的转场样式1menuVC.modalPresentationStyle = UIM">
-<meta property="og:updated_time" content="2017-10-31T08:28:42.000Z">
+<meta property="og:updated_time" content="2017-10-31T08:35:03.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="swift自定义转场动画">
 <meta name="twitter:description" content="使用自定义转场步骤:1.设置被弹出控制器转场的代理属性 - transitioningDelegate1234let menuVC = PopoverViewController()//设置转场动画的代理menuVC.transitioningDelegate = animateDelegate 2.设置被弹出控制器的转场样式1menuVC.modalPresentationStyle = UIM">
@@ -178,6 +178,7 @@
       
         <p>使用自定义转场步骤:<br>1.设置被弹出控制器转场的代理属性 - transitioningDelegate<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">let menuVC = PopoverViewController()</div><div class="line"></div><div class="line">//设置转场动画的代理</div><div class="line">menuVC.transitioningDelegate = animateDelegate</div></pre></td></tr></table></figure></p>
 <p>2.设置被弹出控制器的转场样式<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">menuVC.modalPresentationStyle = UIModalPresentationStyle.custom</div></pre></td></tr></table></figure></p>
+<a id="more"></a>
 <p>3.定义一个控制器继承UIPresentationController，实现代理方法,在代理方法里面返回用于管理自定义转场的控制器<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">/// 这个代理方法,用户返回负责转场的控制器对象</div><div class="line">func presentationController(forPresented presented: UIViewController, presenting: UIViewController?, source: UIViewController) -&gt; UIPresentationController? &#123;</div><div class="line"></div><div class="line">    return PopoverPresentationController(presentedViewController: presented, presenting: presenting)</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
 <p>4.在负责管理转场的控制器中可以给容器视图添加控件,以及修改弹出控制View的尺寸<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">override func containerViewWillLayoutSubviews() &#123;</div><div class="line"></div><div class="line">    /*</div><div class="line">    通过当前转场控制器的containerView属性，可以获取容器视图</div><div class="line">    */</div><div class="line">    presentedView?.frame = CGRect.init(x: (containerView?.frame.size.width)!/2 - 100, y: 56, width: 200, height: 200)</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
 <p>5.如何自定义弹出和消失的动画? 就必须通过代理告诉系统谁来负责动画!(设置代理)<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div></pre></td><td class="code"><pre><div class="line">//设置由谁来负责消失动画  页面出现的时候调用</div><div class="line">func animationController(forPresented presented: UIViewController, presenting: UIViewController, source: UIViewController) -&gt; UIViewControllerAnimatedTransitioning?&#123;</div><div class="line"></div><div class="line">    isPresent = true</div><div class="line"></div><div class="line">return self</div><div class="line">&#125;</div><div class="line"></div><div class="line">//页面消失的时候调用</div><div class="line">func animationController(forDismissed dismissed: UIViewController) -&gt; UIViewControllerAnimatedTransitioning?&#123;</div><div class="line">    //记录当前状态是弹出还是消失</div><div class="line">    isPresent = false</div><div class="line"></div><div class="line">return self</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
@@ -398,11 +399,11 @@ getOwnMetadataKeys:function(t){return o(i(t),arguments.length<2?void 0:u(argumen
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">swift</a>
+                <a href="javascript:void(0)" class="js-tag color2">iOS 笔记</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">iOS 笔记</a>
+                <a href="javascript:void(0)" class="js-tag color1">swift</a>
               </li>
             
             <div class="clearfix"></div>
