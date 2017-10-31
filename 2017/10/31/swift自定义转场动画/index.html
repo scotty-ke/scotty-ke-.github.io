@@ -6,19 +6,19 @@
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge" >
   <link rel="dns-prefetch" href="https://scotty-ke.github.io">
-  <title>First Blog | 我的博客</title>
+  <title>swift自定义转场动画 | 我的博客</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="今天参照潘柏信大神的简书文章《HEXO+Github,搭建属于自己的博客》,一时兴起，想试一下搭建自己的个人博客，地址是HEXO+Github,搭建属于自己的博客,有兴趣的可以尝试一下。">
-<meta name="keywords" content="随笔">
+  <meta name="description" content="使用自定义转场步骤:1.设置被弹出控制器转场的代理属性 - transitioningDelegate1234let menuVC = PopoverViewController()//设置转场动画的代理menuVC.transitioningDelegate = animateDelegate 2.设置被弹出控制器的转场样式1menuVC.modalPresentationStyle = UIM">
+<meta name="keywords" content="swift">
 <meta property="og:type" content="article">
-<meta property="og:title" content="First Blog">
-<meta property="og:url" content="https://scotty-ke.github.io/2017/09/20/First-Blog/index.html">
+<meta property="og:title" content="swift自定义转场动画">
+<meta property="og:url" content="https://scotty-ke.github.io/2017/10/31/swift自定义转场动画/index.html">
 <meta property="og:site_name" content="我的博客">
-<meta property="og:description" content="今天参照潘柏信大神的简书文章《HEXO+Github,搭建属于自己的博客》,一时兴起，想试一下搭建自己的个人博客，地址是HEXO+Github,搭建属于自己的博客,有兴趣的可以尝试一下。">
-<meta property="og:updated_time" content="2017-09-20T03:05:16.000Z">
+<meta property="og:description" content="使用自定义转场步骤:1.设置被弹出控制器转场的代理属性 - transitioningDelegate1234let menuVC = PopoverViewController()//设置转场动画的代理menuVC.transitioningDelegate = animateDelegate 2.设置被弹出控制器的转场样式1menuVC.modalPresentationStyle = UIM">
+<meta property="og:updated_time" content="2017-10-31T08:27:01.000Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="First Blog">
-<meta name="twitter:description" content="今天参照潘柏信大神的简书文章《HEXO+Github,搭建属于自己的博客》,一时兴起，想试一下搭建自己的个人博客，地址是HEXO+Github,搭建属于自己的博客,有兴趣的可以尝试一下。">
+<meta name="twitter:title" content="swift自定义转场动画">
+<meta name="twitter:description" content="使用自定义转场步骤:1.设置被弹出控制器转场的代理属性 - transitioningDelegate1234let menuVC = PopoverViewController()//设置转场动画的代理menuVC.transitioningDelegate = animateDelegate 2.设置被弹出控制器的转场样式1menuVC.modalPresentationStyle = UIM">
   
     <link rel="alternative" href="/atom.xml" title="我的博客" type="application/atom+xml">
   
@@ -156,27 +156,33 @@
             <canvas data-colors="#eaeaea" data-sectionHeight="100" data-contentId="js-content" id="myCanvas1" class="anm-canvas"></canvas>
           </div>
           <div id="js-content" class="content-ll">
-            <article id="post-First-Blog" class="article article-type-post " itemscope itemprop="blogPost">
+            <article id="post-swift自定义转场动画" class="article article-type-post " itemscope itemprop="blogPost">
   <div class="article-inner">
     
       <header class="article-header">
         
   
     <h1 class="article-title" itemprop="name">
-      First Blog
+      swift自定义转场动画
     </h1>
   
 
         
-        <a href="/2017/09/20/First-Blog/" class="archive-article-date">
-  	<time datetime="2017-09-20T02:18:32.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2017-09-20</time>
+        <a href="/2017/10/31/swift自定义转场动画/" class="archive-article-date">
+  	<time datetime="2017-10-31T07:44:49.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2017-10-31</time>
 </a>
         
       </header>
     
     <div class="article-entry" itemprop="articleBody">
       
-        <p>   今天参照潘柏信大神的简书文章《HEXO+Github,搭建属于自己的博客》,一时兴起，想试一下搭建自己的个人博客，地址是<a href="http://www.jianshu.com/p/465830080ea9" target="_blank" rel="external">HEXO+Github,搭建属于自己的博客</a>,有兴趣的可以尝试一下。</p>
+        <p>使用自定义转场步骤:<br>1.设置被弹出控制器转场的代理属性 - transitioningDelegate<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">let menuVC = PopoverViewController()</div><div class="line"></div><div class="line">//设置转场动画的代理</div><div class="line">menuVC.transitioningDelegate = animateDelegate</div></pre></td></tr></table></figure></p>
+<p>2.设置被弹出控制器的转场样式<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">menuVC.modalPresentationStyle = UIModalPresentationStyle.custom</div></pre></td></tr></table></figure></p>
+<p>3.定义一个控制器继承UIPresentationController，实现代理方法,在代理方法里面返回用于管理自定义转场的控制器<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">/// 这个代理方法,用户返回负责转场的控制器对象</div><div class="line">func presentationController(forPresented presented: UIViewController, presenting: UIViewController?, source: UIViewController) -&gt; UIPresentationController? &#123;</div><div class="line"></div><div class="line">    return PopoverPresentationController(presentedViewController: presented, presenting: presenting)</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>4.在负责管理转场的控制器中可以给容器视图添加控件,以及修改弹出控制View的尺寸<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">override func containerViewWillLayoutSubviews() &#123;</div><div class="line"></div><div class="line">    /*</div><div class="line">    通过当前转场控制器的containerView属性，可以获取容器视图</div><div class="line">    */</div><div class="line">    presentedView?.frame = CGRect.init(x: (containerView?.frame.size.width)!/2 - 100, y: 56, width: 200, height: 200)</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>5.如何自定义弹出和消失的动画? 就必须通过代理告诉系统谁来负责动画!(设置代理)<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div></pre></td><td class="code"><pre><div class="line">//设置由谁来负责消失动画  页面出现的时候调用</div><div class="line">func animationController(forPresented presented: UIViewController, presenting: UIViewController, source: UIViewController) -&gt; UIViewControllerAnimatedTransitioning?&#123;</div><div class="line"></div><div class="line">    isPresent = true</div><div class="line"></div><div class="line">return self</div><div class="line">&#125;</div><div class="line"></div><div class="line">//页面消失的时候调用</div><div class="line">func animationController(forDismissed dismissed: UIViewController) -&gt; UIViewControllerAnimatedTransitioning?&#123;</div><div class="line">    //记录当前状态是弹出还是消失</div><div class="line">    isPresent = false</div><div class="line"></div><div class="line">return self</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>6.在代理(UIViewControllerAnimatedTransitioning)里面设置动画的方案<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div></pre></td><td class="code"><pre><div class="line">- ///这个方法无论是弹出还是消失都会来到这里,问你处理方案!</div><div class="line">func animateTransition(using transitionContext: UIViewControllerContextTransitioning)&#123;</div><div class="line"></div><div class="line">if isPresent &#123;</div><div class="line">    这里是出现的动画</div><div class="line">&#125;else</div><div class="line">&#123;</div><div class="line">    这里是消失的动画</div><div class="line">&#125;</div><div class="line">&#125;</div><div class="line"></div><div class="line"></div><div class="line">- ///专门用来管理动画时长的.</div><div class="line">func transitionDuration(using transitionContext: UIViewControllerContextTransitioning?) -&gt; TimeInterval</div></pre></td></tr></table></figure></p>
+<p>在使用过程中，可以定一个类，继承自NSObject，在里面封装你的动画方法，在使用过程中，只需要将弹出控制器的代理属性设置为这个类的实例化对象，并且设置转场样式为custom就可以了。下面附上封装的类里面的代码，代码简单实现了新浪微博点击title出现菜单的动画<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div><div class="line">62</div><div class="line">63</div><div class="line">64</div><div class="line">65</div><div class="line">66</div><div class="line">67</div><div class="line">68</div><div class="line">69</div><div class="line">70</div><div class="line">71</div><div class="line">72</div><div class="line">73</div><div class="line">74</div><div class="line">75</div><div class="line">76</div><div class="line">77</div><div class="line">78</div><div class="line">79</div><div class="line">80</div><div class="line">81</div><div class="line">82</div><div class="line">83</div><div class="line">84</div><div class="line">85</div><div class="line">86</div><div class="line">87</div><div class="line">88</div></pre></td><td class="code"><pre><div class="line">import UIKit</div><div class="line"></div><div class="line">class PopoverAnimationDelegate: NSObject &#123;</div><div class="line"></div><div class="line">var isPresent: Bool = false</div><div class="line"></div><div class="line">&#125;</div><div class="line">extension PopoverAnimationDelegate:UIViewControllerTransitioningDelegate&#123;</div><div class="line"></div><div class="line">func presentationController(forPresented presented: UIViewController, presenting: UIViewController?, source: UIViewController) -&gt; UIPresentationController? &#123;</div><div class="line"></div><div class="line">return PopoverPresentationController(presentedViewController: presented, presenting: presenting)</div><div class="line">&#125;</div><div class="line"></div><div class="line">//设置由谁来负责消失动画  页面出现的时候调用</div><div class="line">func animationController(forPresented presented: UIViewController, presenting: UIViewController, source: UIViewController) -&gt; UIViewControllerAnimatedTransitioning?&#123;</div><div class="line"></div><div class="line">isPresent = true</div><div class="line"></div><div class="line">return self</div><div class="line">&#125;</div><div class="line"></div><div class="line">//页面消失的时候调用</div><div class="line">func animationController(forDismissed dismissed: UIViewController) -&gt; UIViewControllerAnimatedTransitioning?&#123;</div><div class="line"></div><div class="line">isPresent = false</div><div class="line"></div><div class="line">return self</div><div class="line">&#125;</div><div class="line">&#125;</div><div class="line"></div><div class="line">extension PopoverAnimationDelegate:UIViewControllerAnimatedTransitioning</div><div class="line">&#123;</div><div class="line">//专门用来管理动画时长</div><div class="line">func transitionDuration(using transitionContext: UIViewControllerContextTransitioning?) -&gt; TimeInterval</div><div class="line">&#123;</div><div class="line">return 10</div><div class="line">&#125;</div><div class="line"></div><div class="line">/*</div><div class="line">这个方法负责控制器如何弹出和如何消失</div><div class="line">只要是自定义转场，控制器弹出和消失都会调用这个方法</div><div class="line">*/</div><div class="line">func animateTransition(using transitionContext: UIViewControllerContextTransitioning)&#123;</div><div class="line"></div><div class="line">if isPresent &#123;</div><div class="line">presentAnimation(transitionContext: transitionContext)</div><div class="line">&#125;else</div><div class="line">&#123;</div><div class="line">dismissAnimation(transitionContext: transitionContext)</div><div class="line">&#125;</div><div class="line"></div><div class="line"></div><div class="line">&#125;</div><div class="line"></div><div class="line">private func presentAnimation(transitionContext: UIViewControllerContextTransitioning)&#123;</div><div class="line">//获取菜单控制器的view</div><div class="line">let ToView = transitionContext.view(forKey: UITransitionContextViewKey.to)</div><div class="line">//将菜单视图添加到容器视图上</div><div class="line">transitionContext.containerView.addSubview(ToView!)</div><div class="line">//压扁视图</div><div class="line">ToView?.transform = (ToView?.transform.scaledBy(x: 1.0, y: 0.0))!</div><div class="line">//设置锚点，如果不设置，默认锚点是 X * 0.5 Y * 0.5</div><div class="line">ToView?.layer.anchorPoint = CGPoint.init(x: 0.5, y: 0)</div><div class="line">//动画展开</div><div class="line">UIView.animate(withDuration: 0.5, animations: &#123;</div><div class="line">ToView?.transform = CGAffineTransform.identity</div><div class="line">&#125;) &#123; (_) in</div><div class="line"></div><div class="line">//一旦自定义转场动画，完成之后一定要告诉系统动画已经完成</div><div class="line">transitionContext.completeTransition(true)</div><div class="line"></div><div class="line">&#125;</div><div class="line">&#125;</div><div class="line"></div><div class="line">private func dismissAnimation(transitionContext: UIViewControllerContextTransitioning)&#123;</div><div class="line">let fromView = transitionContext.view(forKey: UITransitionContextViewKey.from)</div><div class="line">print(fromView!)</div><div class="line"></div><div class="line">UIView.animate(withDuration: 0.5, animations: &#123;</div><div class="line">fromView?.transform = (fromView?.transform.scaledBy(x: 1.0, y: 0.0001))!</div><div class="line">&#125;) &#123; (_) in</div><div class="line">//一旦自定义转场动画，完成之后一定要告诉系统动画已经完成</div><div class="line">transitionContext.completeTransition(true)</div><div class="line">&#125;</div><div class="line"></div><div class="line">&#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
 
       
 
@@ -190,7 +196,7 @@
 		<ul class="article-tag-list">
 			 
         		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">随笔</a>
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">swift</a>
         		</li>
       		
 		</ul>
@@ -246,7 +252,7 @@
     <a class="close js-modal-close" href="javascript:;"><i class="icon icon-close"></i></a>
     <p>扫一扫，分享到微信</p>
     <div class="wx-qrcode">
-      <img src="http://s.jiathis.com/qrcode.php?url=https://scotty-ke.github.io/2017/09/20/First-Blog/" alt="微信分享二维码">
+      <img src="http://s.jiathis.com/qrcode.php?url=https://scotty-ke.github.io/2017/10/31/swift自定义转场动画/" alt="微信分享二维码">
     </div>
 </div>
 
@@ -260,18 +266,9 @@
   
 <nav id="article-nav">
   
-    <a href="/2017/09/21/MD5加密的两个方法区别/" id="article-nav-newer" class="article-nav-link-wrap">
-      <i class="icon-circle-left"></i>
-      <div class="article-nav-title">
-        
-          MD5加密的两个方法区别(有坑)
-        
-      </div>
-    </a>
   
-  
-    <a href="/2017/09/13/hello-world/" id="article-nav-older" class="article-nav-link-wrap">
-      <div class="article-nav-title">Hello World</div>
+    <a href="/2017/10/13/swift中闭包的循环引用/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">swift中闭包的循环引用</div>
       <i class="icon-circle-right"></i>
     </a>
   
