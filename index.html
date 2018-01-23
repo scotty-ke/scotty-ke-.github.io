@@ -153,6 +153,79 @@
           <div id="js-content" class="content-ll">
             
   
+    <article id="post-CocoaPods-制作属于自己的第三方" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2018/01/23/CocoaPods-制作属于自己的第三方/">CocoaPods 制作属于自己的第三方</a>
+    </h1>
+  
+
+        
+        <a href="/2018/01/23/CocoaPods-制作属于自己的第三方/" class="archive-article-date">
+  	<time datetime="2018-01-23T07:54:02.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-01-23</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>最近自己写了一点小工具，希望也用一些第三方的形式，用Git托管一下，于是就在网上找了一些资料，尝试将代码上传了一下，期间也遇到了一些问题，记录一下过程。</p>
+<p>###1.准备工作<br>    1.在GitHub上创建一个项目，克隆到本地。<br>    2.通过终端命令或者sourcetree等工具，将要上传的代码传到git上。</p>
+<p>###2.创建spec文件<br>    1.通过命令进入到项目目录<br>    2.创建一个&lt;#项目名#&gt;.podspec文件，创建命令是<br>        $pod spec create &lt;#项目名#&gt;<br>    3.将创建好的.podspec文件打开(可以用subLime或者Xcode),编辑文件<br>        Pod::Spec.new do |s|<br>              s.name = “&lt;#项目名#&gt;”<br>                s.version  = “0.1.0” #当前版本<br>                s.summary  = “ “ #描述<br>                s.homepage = “ “#库文件主地址<br>                s.license  = “MIT” #开源协议<br>                s.author   = { “&lt;#名字#&gt;” =&gt; “&lt;作者邮箱&gt;” } #开发者<br>                s.platform = :ios, “8.0” # 持的版本<br>              s.source =  { :git =&gt; “<a href="https://github.com/scotty-ke/SKDateExtension.git" target="_blank" rel="external">https://github.com/scotty-ke/SKDateExtension.git</a>“, :tag =&gt; “0.0.1” }#项目的git地址以及版本号<br>                s.resources = ‘’ #资源文件所在的目录图片图 ,xib等<br>              s.source_files = “” #文件所在的目录<br>              s.requires_arc = true #是否支持arc<br>              s.framework = ‘UIKit’ #当前这个库所依赖的系统的库<br>              s.dependency ‘AFNetworking’, ‘~&gt; 2.3’ #依赖关系，该项目所依赖的其他库，如果有多个需要填写多个s.dependency<br>              end<br>    4.验证spec文件<br>        pod lib lint –verbose –allow-warnings –use-libraries #查看详情编译<br>        pod lib lint –allow-warnings #忽略警告编译<br>    5.在把项目往git官网上提交的时候，需要保证已经在pods上注册过可以通过命令pod trunk me 查看，如果没有注册，通过下面命令注册<br>        pod trunk register <em>youremail</em>@gmail.com ‘<em>yourname</em>‘<br>    6.提交{project}.podspec<br>        pod trunk push &lt;#项目名#&gt;.podspec</p>
+<p>成功以后，可以通过命令pod search &lt;#项目名#&gt; 来查看自己的项目。</p>
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">iOS</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+  
     <article id="post-swift自定义转场动画" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
     
@@ -519,73 +592,6 @@
 
 
   
-    <article id="post-hello-world" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2017/09/13/hello-world/">Hello World</a>
-    </h1>
-  
-
-        
-        <a href="/2017/09/13/hello-world/" class="archive-article-date">
-  	<time datetime="2017-09-13T02:28:42.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2017-09-13</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p>Welcome to <a href="https://hexo.io/" target="_blank" rel="external">Hexo</a>! This is your very first post. Check <a href="https://hexo.io/docs/" target="_blank" rel="external">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a href="https://hexo.io/docs/troubleshooting.html" target="_blank" rel="external">troubleshooting</a> or you can ask me on <a href="https://github.com/hexojs/hexo/issues" target="_blank" rel="external">GitHub</a>.</p>
-<h2 id="Quick-Start"><a href="#Quick-Start" class="headerlink" title="Quick Start"></a>Quick Start</h2><h3 id="Create-a-new-post"><a href="#Create-a-new-post" class="headerlink" title="Create a new post"></a>Create a new post</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ hexo new <span class="string">"My New Post"</span></div></pre></td></tr></table></figure>
-<p>More info: <a href="https://hexo.io/docs/writing.html" target="_blank" rel="external">Writing</a></p>
-<h3 id="Run-server"><a href="#Run-server" class="headerlink" title="Run server"></a>Run server</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ hexo server</div></pre></td></tr></table></figure>
-<p>More info: <a href="https://hexo.io/docs/server.html" target="_blank" rel="external">Server</a></p>
-<h3 id="Generate-static-files"><a href="#Generate-static-files" class="headerlink" title="Generate static files"></a>Generate static files</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ hexo generate</div></pre></td></tr></table></figure>
-<p>More info: <a href="https://hexo.io/docs/generating.html" target="_blank" rel="external">Generating</a></p>
-<h3 id="Deploy-to-remote-sites"><a href="#Deploy-to-remote-sites" class="headerlink" title="Deploy to remote sites"></a>Deploy to remote sites</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ hexo deploy</div></pre></td></tr></table></figure>
-<p>More info: <a href="https://hexo.io/docs/deployment.html" target="_blank" rel="external">Deployment</a></p>
-
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-      
-
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
   
 
 
@@ -596,7 +602,7 @@
   <div class="outer">
     <div id="footer-info">
     	<div class="footer-left">
-    		&copy; 2017 Stanley
+    		&copy; 2018 Stanley
     	</div>
       	<div class="footer-right">
       		<a href="http://hexo.io/" target="_blank">Hexo</a>  Theme <a href="https://github.com/litten/hexo-theme-yilia" target="_blank">Yilia</a> by Litten
@@ -675,19 +681,19 @@ getOwnMetadataKeys:function(t){return o(i(t),arguments.length<2?void 0:u(argumen
           <ul class="article-tag-list" q-show="showTags">
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">随笔</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">swift</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color4">iOS</a>
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">随笔</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color2">iOS 笔记</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">swift</a>
               </li>
             
             <div class="clearfix"></div>
