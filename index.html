@@ -174,10 +174,15 @@
     <div class="article-entry" itemprop="articleBody">
       
         <p>最近自己写了一点小工具，希望也用一些第三方的形式，用Git托管一下，于是就在网上找了一些资料，尝试将代码上传了一下，期间也遇到了一些问题，记录一下过程。</p>
-<p>###1.准备工作<br>    1.在GitHub上创建一个项目，克隆到本地。<br>    2.通过终端命令或者sourcetree等工具，将要上传的代码传到git上。</p>
-<p>###2.创建spec文件<br>    1.通过命令进入到项目目录<br>    2.创建一个&lt;#项目名#&gt;.podspec文件，创建命令是<br>        $pod spec create &lt;#项目名#&gt;<br>    3.将创建好的.podspec文件打开(可以用subLime或者Xcode),编辑文件<br>        Pod::Spec.new do |s|<br>              s.name = “&lt;#项目名#&gt;”<br>                s.version  = “0.1.0” #当前版本<br>                s.summary  = “ “ #描述<br>                s.homepage = “ “#库文件主地址<br>                s.license  = “MIT” #开源协议<br>                s.author   = { “&lt;#名字#&gt;” =&gt; “&lt;作者邮箱&gt;” } #开发者<br>                s.platform = :ios, “8.0” # 持的版本<br>              s.source =  { :git =&gt; “<a href="https://github.com/scotty-ke/SKDateExtension.git" target="_blank" rel="external">https://github.com/scotty-ke/SKDateExtension.git</a>“, :tag =&gt; “0.0.1” }#项目的git地址以及版本号<br>                s.resources = ‘’ #资源文件所在的目录图片图 ,xib等<br>              s.source_files = “” #文件所在的目录<br>              s.requires_arc = true #是否支持arc<br>              s.framework = ‘UIKit’ #当前这个库所依赖的系统的库<br>              s.dependency ‘AFNetworking’, ‘~&gt; 2.3’ #依赖关系，该项目所依赖的其他库，如果有多个需要填写多个s.dependency<br>              end<br>    4.验证spec文件<br>        pod lib lint –verbose –allow-warnings –use-libraries #查看详情编译<br>        pod lib lint –allow-warnings #忽略警告编译<br>    5.在把项目往git官网上提交的时候，需要保证已经在pods上注册过可以通过命令pod trunk me 查看，如果没有注册，通过下面命令注册<br>        pod trunk register <em>youremail</em>@gmail.com ‘<em>yourname</em>‘<br>    6.提交{project}.podspec<br>        pod trunk push &lt;#项目名#&gt;.podspec</p>
-<p>成功以后，可以通过命令pod search &lt;#项目名#&gt; 来查看自己的项目。</p>
-
+<h3 id="一-准备工作"><a href="#一-准备工作" class="headerlink" title="一.准备工作"></a>一.准备工作</h3><pre><code>1.在GitHub上创建一个项目，克隆到本地。
+2.通过终端命令或者sourcetree等工具，将要上传的代码传到git上。
+</code></pre><h3 id="二-创建spec文件"><a href="#二-创建spec文件" class="headerlink" title="二.创建spec文件"></a>二.创建spec文件</h3><pre><code>1.通过命令进入到项目目录
+2.创建一个&lt;#项目名#&gt;.podspec文件，创建命令是
+    $pod spec create &lt;#项目名#&gt;
+</code></pre>
+        
+          <a class="article-more-a" href="/2018/01/23/CocoaPods-制作属于自己的第三方/#more">more >></a>
+        
       
 
       
@@ -685,11 +690,11 @@ getOwnMetadataKeys:function(t){return o(i(t),arguments.length<2?void 0:u(argumen
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">随笔</a>
+                <a href="javascript:void(0)" class="js-tag color2">iOS 笔记</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">iOS 笔记</a>
+                <a href="javascript:void(0)" class="js-tag color3">随笔</a>
               </li>
              
               <li class="article-tag-list-item">
