@@ -153,6 +153,236 @@
           <div id="js-content" class="content-ll">
             
   
+    <article id="post-NSNumber-个性化" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2018/03/19/NSNumber-个性化/">NSNumber 个性化</a>
+    </h1>
+  
+
+        
+        <a href="/2018/03/19/NSNumber-个性化/" class="archive-article-date">
+  	<time datetime="2018-03-19T03:36:50.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-03-19</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>NSNumberFormatter 可以对NSNumber进行定制化</p>
+<pre><code>    NSNumber *num1 = [NSNumber numberWithDouble:1234567.8369];
+
+// ==================== 类方法 ====================
+
+// 四舍五入的整数
+NSString *numberNoStyleStr                 = [NSNumberFormatter localizedStringFromNumber:num1 numberStyle:NSNumberFormatterNoStyle];
+
+// 小数形式
+NSString *numberDecimalStyleStr            = [NSNumberFormatter localizedStringFromNumber:num1 numberStyle:NSNumberFormatterDecimalStyle];
+
+// 货币形式 -- 本地化
+NSString *numberCurrencyStyleStr           = [NSNumberFormatter localizedStringFromNumber:num1 numberStyle:NSNumberFormatterCurrencyStyle];
+
+// 百分数形式
+NSString *numberPercentStyleStr            = [NSNumberFormatter localizedStringFromNumber:num1 numberStyle:NSNumberFormatterPercentStyle];
+
+// 科学计数
+NSString *numberScientificStyleStr         = [NSNumberFormatter localizedStringFromNumber:num1 numberStyle:NSNumberFormatterScientificStyle];
+
+// 朗读形式 -- 本地化
+NSString *numberSpellOutStyleStr           = [NSNumberFormatter localizedStringFromNumber:num1 numberStyle:NSNumberFormatterSpellOutStyle];
+
+NSLog(@&quot;No Style                  = %@&quot;,numberNoStyleStr);                // No Style                  = 1234568
+NSLog(@&quot;Decimal Style             = %@&quot;,numberDecimalStyleStr);           // Decimal Style             = 1,234,567.837
+NSLog(@&quot;Currency Style            = %@&quot;,numberCurrencyStyleStr);          // Currency Style            = $1,234,567.84
+NSLog(@&quot;Percent Style             = %@&quot;,numberPercentStyleStr);           // Percent Style             = 123,456,784%
+NSLog(@&quot;Scientific Style          = %@&quot;,numberScientificStyleStr);        // Scientific Style          = 1.2345678369E6
+// Spell Out Style           = one million two hundred thirty-four thousand five hundred sixty-seven point eight three six nine
+NSLog(@&quot;Spell Out Style           = %@&quot;,numberSpellOutStyleStr);
+
+// 序数形式 -- 本地化
+if (@available(iOS 9.0, *)) {
+    NSString *numberOrdinalStyleStr            = [NSNumberFormatter localizedStringFromNumber:num1 numberStyle:NSNumberFormatterOrdinalStyle];
+
+    NSLog(@&quot;Ordinal Style             = %@&quot;,numberOrdinalStyleStr);// Ordinal Style             = 1,234,568th
+} else {
+    // Fallback on earlier versions
+}
+
+// 货币形式 ISO -- 本地化
+if (@available(iOS 9.0, *)) {
+    NSString *numberCurrencyISOStyleStr        = [NSNumberFormatter localizedStringFromNumber:num1 numberStyle:NSNumberFormatterCurrencyISOCodeStyle];
+    NSLog(@&quot;Currency ISO Style        = %@&quot;,numberCurrencyISOStyleStr); // Currency ISO Style        = USD1,234,567.84
+} else {
+    // Fallback on earlier versions
+}
+// 货币形式 -- 本地化
+if (@available(iOS 9.0, *)) {
+    NSString *numberCurrencyPluralStyleStr     = [NSNumberFormatter localizedStringFromNumber:num1 numberStyle:NSNumberFormatterCurrencyPluralStyle];
+
+    NSLog(@&quot;Currency plural Style     = %@&quot;,numberCurrencyPluralStyleStr);// Currency plural Style     = 1,234,567.84 US dollars
+} else {
+    // Fallback on earlier versions
+} 
+
+// 会计计数 -- 本地化
+if (@available(iOS 9.0, *)) {
+    NSString *numberCurrencyAccountingStyleStr = [NSNumberFormatter localizedStringFromNumber:num1 numberStyle:NSNumberFormatterCurrencyAccountingStyle];
+
+    NSLog(@&quot;Currency accounting Style = %@&quot;,numberCurrencyAccountingStyleStr); // Currency accounting Style = $1,234,567.84
+
+} else {
+    // Fallback on earlier versions
+}
+
+// ==================== 定制 ====================
+
+NSNumberFormatter *numberFormatter = [NSNumberFormatter new];
+
+numberFormatter.numberStyle = NSNumberFormatterDecimalStyle;
+
+// 格式宽度
+numberFormatter.formatWidth = 15;
+
+// 填充符
+numberFormatter.paddingCharacter = @&quot;?&quot;;
+
+// 填充位置
+numberFormatter.paddingPosition = kCFNumberFormatterPadBeforeSuffix;
+numberFormatter.positiveSuffix = @&quot;元&quot;;
+
+NSLog(@&quot;%@&quot;,[numberFormatter numberFromString:@&quot;10000000元&quot;]);  // 10000000
+
+/*
+ 缩放因子,你可以将一个数缩放指定比例,然后给其添加后缀,如传入一个3000,你希望表示为3千,就要用到这个属性
+ 防止影响后面的测试,故注掉
+ numberFormatter.multiplier = @1000;
+
+ NSLog(@&quot;%@千&quot;,[numberFormatter numberFromString:@&quot;1000&quot;]);  // 1千
+
+ numberFormatter.multiplier     = @0.001;
+ numberFormatter.positiveSuffix = @&quot;千&quot;;
+ NSLog(@&quot;%@&quot;,[numberFormatter stringFromNumber:@10000]);    // 10千
+
+ 机制不明确,负号,正号
+ numberFormatter.negativeFormat = @&quot;^&quot;;
+ numberFormatter.positiveFormat = @&quot;~0&quot;;
+ */
+
+// 貌似没什么用
+numberFormatter.allowsFloats = NO;
+numberFormatter.alwaysShowsDecimalSeparator = NO;
+numberFormatter.maximum = @1000;
+numberFormatter.minimum = @100;
+
+// 小数点样式
+numberFormatter.decimalSeparator = @&quot;.&quot;;
+
+// 零的样式
+numberFormatter.zeroSymbol       = @&quot;-&quot;;
+
+// 前缀和后缀
+numberFormatter.positivePrefix = @&quot;!&quot;;
+numberFormatter.positiveSuffix = @&quot;元&quot;;
+numberFormatter.negativePrefix = @&quot;@&quot;;
+numberFormatter.negativeSuffix = @&quot;亏&quot;;
+
+// 指定符号,与我们在前面类方法中说明的一致
+NSLog(@&quot;货币代码%@&quot;,numberFormatter.currencyCode);                     // 货币代码USD
+NSLog(@&quot;货币符号%@&quot;,numberFormatter.currencySymbol);                   // 货币符号$
+NSLog(@&quot;国际货币符号%@&quot;,numberFormatter.internationalCurrencySymbol);   // 国际货币符号USD
+NSLog(@&quot;百分比符号%@&quot;,numberFormatter.percentSymbol);                   // 百分比符号%
+NSLog(@&quot;千分号符号%@&quot;,numberFormatter.perMillSymbol);                   // 千分号符号‰
+NSLog(@&quot;减号符号%@&quot;,numberFormatter.minusSign);                         // 减号符号-
+NSLog(@&quot;加号符号%@&quot;,numberFormatter.plusSign);                          // 加号符号+
+NSLog(@&quot;指数符号%@&quot;,numberFormatter.exponentSymbol);                    // 指数符号E
+
+// 整数最多位数
+numberFormatter.maximumIntegerDigits = 10;
+
+// 整数最少位数
+numberFormatter.minimumIntegerDigits = 2;
+
+// 小数位最多位数
+numberFormatter.maximumFractionDigits = 3;
+
+// 小数位最少位数
+numberFormatter.minimumFractionDigits = 1;
+
+// 数字分割的尺寸
+numberFormatter.groupingSize = 4;
+
+// 除了groupingSize决定的尺寸外,其他数字位分割的尺寸
+numberFormatter.secondaryGroupingSize = 2;
+
+// 最大有效数字个数
+numberFormatter.maximumSignificantDigits = 12;
+
+// 最少有效数字个数
+numberFormatter.minimumSignificantDigits = 3;
+
+NSLog(@&quot;正数%@,负数%@&quot;,[numberFormatter stringFromNumber:@(+12135230.2346)],[numberFormatter stringFromNumber:@(-12135231.2346)]);  // 正数!12,13,5230.2346元,负数@12,13,5231.2346亏
+NSLog(@&quot;零 = %@&quot;,[numberFormatter stringFromNumber:@(0)]); //  零 = -
+
+// 舍入值,比如以10为进位值,那么156就进位为160,154进位为150
+numberFormatter.roundingIncrement = @10;
+
+// 舍入方式
+numberFormatter.roundingMode = kCFNumberFormatterRoundHalfUp;
+NSLog(@&quot;%@&quot;,[numberFormatter stringFromNumber:@123456.7890]);  // !12,3460元
+</code></pre>
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color2">ios 笔记</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+  
     <article id="post-CocoaPods-制作属于自己的第三方" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
     
@@ -690,11 +920,15 @@ getOwnMetadataKeys:function(t){return o(i(t),arguments.length<2?void 0:u(argumen
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">iOS 笔记</a>
+                <a href="javascript:void(0)" class="js-tag color3">随笔</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">随笔</a>
+                <a href="javascript:void(0)" class="js-tag color2">ios 笔记</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">iOS 笔记</a>
               </li>
              
               <li class="article-tag-list-item">
