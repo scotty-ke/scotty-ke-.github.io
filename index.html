@@ -153,6 +153,158 @@
           <div id="js-content" class="content-ll">
             
   
+    <article id="post-lldb的一些扩展用法" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2018/04/24/lldb的一些扩展用法/">lldb的一些扩展用法</a>
+    </h1>
+  
+
+        
+        <a href="/2018/04/24/lldb的一些扩展用法/" class="archive-article-date">
+  	<time datetime="2018-04-24T09:19:40.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-04-24</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>最近在github上看到Facebookd的一个关于lldb调试的一个第三方chisel，用了一下，感觉里面有一些东西还是挺有意思的，就记录一下。github地址是<a href="https://github.com/facebook/chisel" target="_blank" rel="external">chisel具体介绍</a></p>
+<p>要想使用这个工具，首先需要在电脑上安装一下chisel,具体步骤在github上有详细介绍，这里我简单介绍一下，有什么问题可以再去github看详细介绍或者自行百度。</p>
+<ul>
+<li>安装chisel 命令是：brew install chisel  至于安装brew命令，请自行百度</li>
+<li>打开终端，直接在用户目录下创建.lldbinit文件(touch .lldbinit),如果用或者创建完场以后用open命令打开该文件(open .lldbinit)。这个文件是隐藏文件，在finder中看不到，用command + shift + . 可以查看隐藏文件，再按一次可以隐藏。</li>
+<li>打开.lldbinit文件，将command script import /usr/local/opt/chisel/libexec/fblldb.py 复制进.lldbinit文件。然后重启Xcode,chisel就已经安装成功了。</li>
+</ul>
+<p>打开xcode，运行项目，点击调试台的暂停，在控制台打印help,会出现很多调试的命令，如果出现如图所示的命令，则证明chisel安装成功<img src="https://ws2.sinaimg.cn/large/006tNc79gy1fqnwgvwilej311e0oewoo.jpg" alt=""></p>
+<p>然后我们就可以用这些命令来做一些调试了，下面介绍几个简单命令的使用。</p>
+        
+          <a class="article-more-a" href="/2018/04/24/lldb的一些扩展用法/#more">more >></a>
+        
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">iOS</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+  
+    <article id="post-Runtime浅应用" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2018/03/29/Runtime浅应用/">Runtime浅应用</a>
+    </h1>
+  
+
+        
+        <a href="/2018/03/29/Runtime浅应用/" class="archive-article-date">
+  	<time datetime="2018-03-29T07:49:14.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-03-29</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>Runtime 在我们开发中可能用到的不多，但是有些时候，它却可以帮我们快速的完成一些特殊的需求，这两天看了一些Runtime的几个简单功能，记录一下。</p>
+<p>我们所说的Runtime是苹果给我们提供的C语言API,它给我们提供了很多的函数,让我们可以在我们的项目中可以有一些非常底层实际性的操作.Runtime可以让我们去动态的修改内存里的一些东西,譬如被执行的代码,创建的对象,图片等.下面通过两个例子记录一下Runtime的一些简单功能。</p>
+<p>首先，Runtime可以动态的获取我们OC对象的属性，下面我们通过我们平常常用到的归档解档操作，来看一下用Runtime是怎么实现的。</p>
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">iOS</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+  
     <article id="post-NSNumber-个性化" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
     

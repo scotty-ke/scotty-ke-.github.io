@@ -6,14 +6,24 @@
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge" >
   <link rel="dns-prefetch" href="https://scotty-ke.github.io">
-  <title>Archives: 2018 | 我的博客</title>
+  <title>lldb的一些扩展用法 | 我的博客</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta property="og:type" content="website">
-<meta property="og:title" content="我的博客">
-<meta property="og:url" content="https://scotty-ke.github.io/archives/2018/index.html">
+  <meta name="description" content="最近在github上看到Facebookd的一个关于lldb调试的一个第三方chisel，用了一下，感觉里面有一些东西还是挺有意思的，就记录一下。github地址是chisel具体介绍 要想使用这个工具，首先需要在电脑上安装一下chisel,具体步骤在github上有详细介绍，这里我简单介绍一下，有什么问题可以再去github看详细介绍或者自行百度。  安装chisel 命令是：brew inst">
+<meta name="keywords" content="iOS">
+<meta property="og:type" content="article">
+<meta property="og:title" content="lldb的一些扩展用法">
+<meta property="og:url" content="https://scotty-ke.github.io/2018/04/24/lldb的一些扩展用法/index.html">
 <meta property="og:site_name" content="我的博客">
+<meta property="og:description" content="最近在github上看到Facebookd的一个关于lldb调试的一个第三方chisel，用了一下，感觉里面有一些东西还是挺有意思的，就记录一下。github地址是chisel具体介绍 要想使用这个工具，首先需要在电脑上安装一下chisel,具体步骤在github上有详细介绍，这里我简单介绍一下，有什么问题可以再去github看详细介绍或者自行百度。  安装chisel 命令是：brew inst">
+<meta property="og:image" content="https://ws2.sinaimg.cn/large/006tNc79gy1fqnwgvwilej311e0oewoo.jpg">
+<meta property="og:image" content="https://ws4.sinaimg.cn/large/006tNc79gy1fqnwrnyw1vj31ae0mm48e.jpg">
+<meta property="og:image" content="https://ws2.sinaimg.cn/large/006tNc79gy1fqnwvtk055j30lk0aeq62.jpg">
+<meta property="og:image" content="https://ws1.sinaimg.cn/large/006tNc79gy1fqnxr0esycj30vo04q3yy.jpg">
+<meta property="og:updated_time" content="2018-04-24T10:53:51.209Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="我的博客">
+<meta name="twitter:title" content="lldb的一些扩展用法">
+<meta name="twitter:description" content="最近在github上看到Facebookd的一个关于lldb调试的一个第三方chisel，用了一下，感觉里面有一些东西还是挺有意思的，就记录一下。github地址是chisel具体介绍 要想使用这个工具，首先需要在电脑上安装一下chisel,具体步骤在github上有详细介绍，这里我简单介绍一下，有什么问题可以再去github看详细介绍或者自行百度。  安装chisel 命令是：brew inst">
+<meta name="twitter:image" content="https://ws2.sinaimg.cn/large/006tNc79gy1fqnwgvwilej311e0oewoo.jpg">
   
     <link rel="alternative" href="/atom.xml" title="我的博客" type="application/atom+xml">
   
@@ -151,36 +161,52 @@
             <canvas data-colors="#eaeaea" data-sectionHeight="100" data-contentId="js-content" id="myCanvas1" class="anm-canvas"></canvas>
           </div>
           <div id="js-content" class="content-ll">
-            
+            <article id="post-lldb的一些扩展用法" class="article article-type-post " itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
   
+    <h1 class="article-title" itemprop="name">
+      lldb的一些扩展用法
+    </h1>
   
-    
-    
-      
-      
-      <section class="archives-wrap">
-        <div class="archive-year-wrap">
-          <a href="/archives/2018" class="archive-year">2018</a>
-        </div>
-        <div class="archives">
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2018/04/24/lldb的一些扩展用法/" class="archive-article-date">
+
+        
+        <a href="/2018/04/24/lldb的一些扩展用法/" class="archive-article-date">
   	<time datetime="2018-04-24T09:19:40.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-04-24</time>
 </a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2018/04/24/lldb的一些扩展用法/">lldb的一些扩展用法</a>
-    </h1>
-  
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>最近在github上看到Facebookd的一个关于lldb调试的一个第三方chisel，用了一下，感觉里面有一些东西还是挺有意思的，就记录一下。github地址是<a href="https://github.com/facebook/chisel" target="_blank" rel="external">chisel具体介绍</a></p>
+<p>要想使用这个工具，首先需要在电脑上安装一下chisel,具体步骤在github上有详细介绍，这里我简单介绍一下，有什么问题可以再去github看详细介绍或者自行百度。</p>
+<ul>
+<li>安装chisel 命令是：brew install chisel  至于安装brew命令，请自行百度</li>
+<li>打开终端，直接在用户目录下创建.lldbinit文件(touch .lldbinit),如果用或者创建完场以后用open命令打开该文件(open .lldbinit)。这个文件是隐藏文件，在finder中看不到，用command + shift + . 可以查看隐藏文件，再按一次可以隐藏。</li>
+<li>打开.lldbinit文件，将command script import /usr/local/opt/chisel/libexec/fblldb.py 复制进.lldbinit文件。然后重启Xcode,chisel就已经安装成功了。</li>
+</ul>
+<p>打开xcode，运行项目，点击调试台的暂停，在控制台打印help,会出现很多调试的命令，如果出现如图所示的命令，则证明chisel安装成功<img src="https://ws2.sinaimg.cn/large/006tNc79gy1fqnwgvwilej311e0oewoo.jpg" alt=""></p>
+<p>然后我们就可以用这些命令来做一些调试了，下面介绍几个简单命令的使用。</p>
+<a id="more"></a>
+<p>1.pvc 可以看到当前控制器所在的栈的所有出入栈的控制器<img src="https://ws4.sinaimg.cn/large/006tNc79gy1fqnwrnyw1vj31ae0mm48e.jpg" alt="">可以看到，当前显示的控制器后面没有not in the window,当前显示的怎没有这个标记。用这个方法，可以用来方便的查看控制器，如果接手一个不熟悉的工程，用这个可以很方便的帮我们梳理控制器。</p>
+<p>2.pviews + View地址  可以看到当前地址指向的View上的所有子视图<img src="https://ws2.sinaimg.cn/large/006tNc79gy1fqnwvtk055j30lk0aeq62.jpg" alt="">对于复杂的Xib,可以让我们比较容易的看清层级。</p>
+<p>3.border命令可以帮我们在一个控件上添加一个边框具体用法是border -c red(这里写颜色) -w 2(这里写宽度) 0x129af63a0(这里写View的地址).在xcode里面有一个自带的工具，比这个更加方便，在xcode -&gt; Debug -&gt; ViewDebugging -&gt; show view frames 这个可以直接把所有的控件加上边框，但是这个颜色不能定义。 </p>
+<p>4.和border命令相对应的是unborder命令，用法一样，作用相反。</p>
+<p>5.pclass + 地址 可以查看该控件的继承关系<img src="https://ws1.sinaimg.cn/large/006tNc79gy1fqnxr0esycj30vo04q3yy.jpg" alt=""></p>
+<p>6.show/hide + 地址 可以直接显示或隐藏某个控件。</p>
+<p>7.pinternal 地址  可以查看一些控件的属性 继承关系  有一些私有熟悉 和自定义属性。</p>
+<p>chisel里面还有很多命令，我这里就暂时介绍这么多，有兴趣的可以自己使用试一下。</p>
 
-        <div class="article-info info-on-right">
-          
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
 	<div class="article-tag tagcloud">
 		<i class="icon-price-tags icon"></i>
 		<ul class="article-tag-list">
@@ -192,133 +218,106 @@
 		</ul>
 	</div>
 
-          
+      
 
+      
+
+      
+        
+<div class="share-btn share-icons tooltip-left">
+  <div class="tooltip tooltip-east">
+    <span class="tooltip-item">
+      <a href="javascript:;" class="share-sns share-outer">
+        <i class="icon icon-share"></i>
+      </a>
+    </span>
+    <span class="tooltip-content">
+      <div class="share-wrap">
+        <div class="share-icons">
+          <a class="weibo share-sns" href="javascript:;" data-type="weibo">
+            <i class="icon icon-weibo"></i>
+          </a>
+          <a class="weixin share-sns wxFab" href="javascript:;" data-type="weixin">
+            <i class="icon icon-weixin"></i>
+          </a>
+          <a class="qq share-sns" href="javascript:;" data-type="qq">
+            <i class="icon icon-qq"></i>
+          </a>
+          <a class="douban share-sns" href="javascript:;" data-type="douban">
+            <i class="icon icon-douban"></i>
+          </a>
+          <a class="qzone share-sns" href="javascript:;" data-type="qzone">
+            <i class="icon icon-qzone"></i>
+          </a>
+          <a class="facebook share-sns" href="javascript:;" data-type="facebook">
+            <i class="icon icon-facebook"></i>
+          </a>
+          <a class="twitter share-sns" href="javascript:;" data-type="twitter">
+            <i class="icon icon-twitter"></i>
+          </a>
+          <a class="google share-sns" href="javascript:;" data-type="google">
+            <i class="icon icon-google"></i>
+          </a>
         </div>
-        <div class="clearfix"></div>
-    </header>
+      </div>
+    </span>
+  </div>
+</div>
+
+<div class="page-modal wx-share js-wx-box">
+    <a class="close js-modal-close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <div class="wx-qrcode">
+      <img src="http://s.jiathis.com/qrcode.php?url=https://scotty-ke.github.io/2018/04/24/lldb的一些扩展用法/" alt="微信分享二维码">
+    </div>
+</div>
+
+<div class="mask js-mask"></div>
+      
+      <div class="clearfix"></div>
+    </div>
   </div>
 </article>
+
   
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2018/03/29/Runtime浅应用/" class="archive-article-date">
-  	<time datetime="2018-03-29T07:49:14.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-03-29</time>
-</a>
+<nav id="article-nav">
+  
+  
+    <a href="/2018/03/29/Runtime浅应用/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">Runtime浅应用</div>
+      <i class="icon-circle-right"></i>
+    </a>
+  
+</nav>
+
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
         </div>
-    	 
+        
+        
+    </div>
+</aside>
+
+
+
   
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2018/03/29/Runtime浅应用/">Runtime浅应用</a>
-    </h1>
+  
   
 
-        <div class="article-info info-on-right">
-          
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">iOS</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-          
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2018/03/19/NSNumber-个性化/" class="archive-article-date">
-  	<time datetime="2018-03-19T03:36:50.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-03-19</time>
-</a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2018/03/19/NSNumber-个性化/">NSNumber 个性化</a>
-    </h1>
   
 
-        <div class="article-info info-on-right">
-          
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color2">ios 笔记</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-          
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2018/01/23/CocoaPods-制作属于自己的第三方/" class="archive-article-date">
-  	<time datetime="2018-01-23T07:54:02.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-01-23</time>
-</a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2018/01/23/CocoaPods-制作属于自己的第三方/">CocoaPods 制作属于自己的第三方</a>
-    </h1>
   
 
-        <div class="article-info info-on-right">
-          
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">iOS</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-          
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
   
-  
-    </div></section>
-  
-
-    
 
 
           </div>
@@ -341,8 +340,8 @@
 	var yiliaConfig = {
 		mathjax: false,
 		isHome: false,
-		isPost: false,
-		isArchive: true,
+		isPost: true,
+		isArchive: false,
 		isTag: false,
 		isCategory: false,
 		open_in_new: false,
