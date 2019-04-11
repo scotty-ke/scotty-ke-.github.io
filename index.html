@@ -153,6 +153,148 @@
           <div id="js-content" class="content-ll">
             
   
+    <article id="post-RunLoop初识" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2018/12/11/RunLoop初识/">RunLoop初识</a>
+    </h1>
+  
+
+        
+        <a href="/2018/12/11/RunLoop初识/" class="archive-article-date">
+  	<time datetime="2018-12-11T08:49:07.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-12-11</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>最近遇到一个很奇葩的问题，用collectionView写了一个列表，每一个item上显示一张图片和两个label，每页加载20条数据，数据少的时候没什么问题，但是当数据多的时候滑动到第700左右的数据的时候，APP开始变得卡顿，最后忽然闪退了，刚开始以为是代码的问题，后来发现代码没有问题，Xcode控制台报了一个错误iOS Message from debugger: Terminated due to memory issue。看到这个我确定应该不是代码的问题，我猜想可能是服务器返回的图片太多，把内存撑爆了，那下一步就是解决这个闪退问题，既然一次加载20张，很消耗性能，那一次加载一张图片或者说定一个小于20的，让一次少加载几张不就可以了，这个时候我想起来了Runloop(说实话这是第一次在代码里面用RunLoop来解决问题)。下面是相关代码实现</p>
+<p>1、定义几个相关参数</p>
+<pre><code> typedef void(^SaveFuncBlock)(void);
+//存放任务的数组
+@property (nonatomic, strong) NSMutableArray     *saveTaskMarr;
+
+//最大任务数（超过最大任务数的任务就停止执行）
+@property (nonatomic, assign) NSInteger maxTasksNumber;
+
+//任务执行的代码块
+@property (nonatomic, copy) SaveFuncBlock saveFuncBlock;
+
+@property (nonatomic, weak) NSTimer *timer;
+</code></pre><p>2、创建定时器，每隔一秒响应一个空方法，用来唤醒Runloop</p>
+<pre><code>self.timer = [NSTimer scheduledTimerWithTimeInterval:0.1 target:self selector:@selector(setRunLoop) userInfo:nil repeats:YES];
+-(void)setRunLoop{
+
+}
+</code></pre><p>3、将加载数据的操作装入block，将block装入到任务数组里面</p>
+<pre><code>  __weak typeof(self) weakSelf = self;
+ [self addTasks:^{
+        //下载图片的任务
+        [weakSelf addImageToCell:cell andTag:i];
+    }];
+
+//添加任务进数组保存
+-(void)addTasks:(SaveFuncBlock)taskBlock{
+
+[self.saveTaskMarr addObject:taskBlock];
+//超过每次最多执行的任务数就移出当前数组
+if (self.saveTaskMarr.count &gt; self.maxTasksNumber) {            
+    //这里maxTasksNumber可以自己定义
+    [self.saveTaskMarr removeObjectAtIndex:0];
+}
+}
+</code></pre><p>4、为当前RunLoop添加监听者，当Runloop苏醒一次就执行一次</p>
+<pre><code> -(void)addRunloopObserver{
+//获取当前runloop
+CFRunLoopRef  currentRunloop =  CFRunLoopGetCurrent();
+//runloop观察者上下文， 为下面创建观察者准备，只有创建上下文才能在回调了拿到self对象，才能进行我们的逻辑操作. 这是一个结构体。
+CFRunLoopObserverContext  context = {
+    0,
+    (__bridge void *)(self),
+    &amp;CFRetain,
+    &amp;CFRelease,
+    NULL
+};
+//创建Runloop观察者  kCFRunLoopBeforeWaiting  观察在等待状态之前  runloop有下面几种状态 看英文应该知道了。
+static CFRunLoopObserverRef  obserberRef;
+obserberRef =CFRunLoopObserverCreate(NULL, kCFRunLoopBeforeWaiting, YES, 0,&amp;callback, &amp;context);
+//给当前runloop添加观察者
+CFRunLoopAddObserver(currentRunloop, obserberRef, kCFRunLoopDefaultMode);
+//释放观察者
+CFRelease(obserberRef);
+}
+
+//观察回调
+static void callback(CFRunLoopObserverRef observer, CFRunLoopActivity activity, void *info){
+//拿到控制器
+LGResultListViewController * vcSelf = (__bridge LGResultListViewController *)(info);
+
+if (vcSelf.saveTaskMarr.count &gt; 0) {
+    //获取一次数组里面的任务并执行
+    SaveFuncBlock  task  =  vcSelf.saveTaskMarr.firstObject;
+    task();
+    [vcSelf.saveTaskMarr removeObjectAtIndex:0];
+}else{
+    [vcSelf.timer invalidate];
+    vcSelf.timer = nil;
+    return;
+}
+}
+</code></pre><p>这样就解决了加载多张图片时候出现的内存爆掉的问题，感觉RunLoop真的强大，但是自己了解还是太少，以后有机会还会多了解一点，把这个强大的工具应用起来。</p>
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">iOS</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+  
     <article id="post-lldb的一些扩展用法" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
     
@@ -1180,11 +1322,11 @@ getOwnMetadataKeys:function(t){return o(i(t),arguments.length<2?void 0:u(argumen
           <ul class="article-tag-list" q-show="showTags">
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">iOS</a>
+                <a href="javascript:void(0)" class="js-tag color3">随笔</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">随笔</a>
+                <a href="javascript:void(0)" class="js-tag color4">iOS</a>
               </li>
              
               <li class="article-tag-list-item">
