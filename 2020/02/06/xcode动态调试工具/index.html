@@ -6,14 +6,25 @@
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge" >
   <link rel="dns-prefetch" href="https://scotty-ke.github.io">
-  <title>Archives: 2018 | 我的博客</title>
+  <title>xcode动态调试工具 | 我的博客</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta property="og:type" content="website">
-<meta property="og:title" content="我的博客">
-<meta property="og:url" content="https://scotty-ke.github.io/archives/2018/index.html">
+  <meta name="description" content="Instrument介绍instrument是xcode上的测试工具，用于分析OS X和iOS代码，可以帮助我们在开发过程中检测内存，分析性能，帮助我们开发出更高效的代码。 在xcode中，我们可以通过工具栏中的Product-&amp;gt;Profile(command + i)打开instrument界面，界面如下 instrument 常用模板 Leaks（泄漏）：一般的查看内存使用情况，检查泄漏">
+<meta name="keywords" content="iOS">
+<meta property="og:type" content="article">
+<meta property="og:title" content="xcode动态调试工具">
+<meta property="og:url" content="https://scotty-ke.github.io/2020/02/06/xcode动态调试工具/index.html">
 <meta property="og:site_name" content="我的博客">
+<meta property="og:description" content="Instrument介绍instrument是xcode上的测试工具，用于分析OS X和iOS代码，可以帮助我们在开发过程中检测内存，分析性能，帮助我们开发出更高效的代码。 在xcode中，我们可以通过工具栏中的Product-&amp;gt;Profile(command + i)打开instrument界面，界面如下 instrument 常用模板 Leaks（泄漏）：一般的查看内存使用情况，检查泄漏">
+<meta property="og:image" content="https://ibb.co/bPtq8CZ">
+<meta property="og:image" content="https://ibb.co/VVCyxWK">
+<meta property="og:image" content="https://ibb.co/x3QNNQ6">
+<meta property="og:image" content="https://ibb.co/Y22KPph">
+<meta property="og:image" content="https://ibb.co/7QVXc3K">
+<meta property="og:updated_time" content="2020-08-06T12:57:51.323Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="我的博客">
+<meta name="twitter:title" content="xcode动态调试工具">
+<meta name="twitter:description" content="Instrument介绍instrument是xcode上的测试工具，用于分析OS X和iOS代码，可以帮助我们在开发过程中检测内存，分析性能，帮助我们开发出更高效的代码。 在xcode中，我们可以通过工具栏中的Product-&amp;gt;Profile(command + i)打开instrument界面，界面如下 instrument 常用模板 Leaks（泄漏）：一般的查看内存使用情况，检查泄漏">
+<meta name="twitter:image" content="https://ibb.co/bPtq8CZ">
   
     <link rel="alternative" href="/atom.xml" title="我的博客" type="application/atom+xml">
   
@@ -139,36 +150,63 @@
             <canvas data-colors="#eaeaea" data-sectionHeight="100" data-contentId="js-content" id="myCanvas1" class="anm-canvas"></canvas>
           </div>
           <div id="js-content" class="content-ll">
-            
-  
-  
+            <article id="post-xcode动态调试工具" class="article article-type-post " itemscope itemprop="blogPost">
+  <div class="article-inner">
     
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      xcode动态调试工具
+    </h1>
+  
+
+        
+        <a href="/2020/02/06/xcode动态调试工具/" class="archive-article-date">
+  	<time datetime="2020-02-06T11:21:08.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-02-06</time>
+</a>
+        
+      </header>
     
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h3 id="Instrument介绍"><a href="#Instrument介绍" class="headerlink" title="Instrument介绍"></a>Instrument介绍</h3><p>instrument是xcode上的测试工具，用于分析OS X和iOS代码，可以帮助我们在开发过程中检测内存，分析性能，帮助我们开发出更高效的代码。</p>
+<p>在xcode中，我们可以通过工具栏中的Product-&gt;Profile(command + i)打开instrument界面，界面如下<br><img src="https://ibb.co/bPtq8CZ" alt="instrument界面"></p>
+<h3 id="instrument-常用模板"><a href="#instrument-常用模板" class="headerlink" title="instrument 常用模板"></a>instrument 常用模板</h3><ul>
+<li><p>Leaks（泄漏）：一般的查看内存使用情况，检查泄漏的内存，并提供了所有活动的分配和泄漏模块的类对象分配统计信息以及内存地址历史记录；</p>
+</li>
+<li><p>Time Profiler（时间探查）：执行对系统的 CPU上运行的进程低负载时间为基础采样。</p>
+</li>
+<li><p>Allocations（内存分配）：跟踪过程的匿名虚拟内存和堆的对象提供类名和可选保留/释放历史；</p>
+</li>
+<li></li>
+<li><p>Activity Monitor（活动监视器）：显示器处理的 CPU、内存和网络使用情况统计；</p>
+</li>
+<li><p>Blank（空模板）：创建一个空的模板，可以从Library 库中添加其他模板；</p>
+</li>
+<li><p>Automation（自动化）：这个模板执行它模拟用户界面交互为 iOS 手机应用从 instrument 启动的脚本；</p>
+</li>
+<li><p>Core Data：监测读取、缓存未命中、保存等操作，能直观显示是否保存次数远超实际需要。</p>
+</li>
+<li><p>Cocoa Layout：观察约束变化，找出布局代码的问题所在。</p>
+</li>
+<li><p>Network：跟踪 TCP/IP和 UDP/IP 连接。</p>
+</li>
+<li><p>Automations：创建和编辑测试脚本来自动化 iOS 应用的用户界面测试。</p>
+</li>
+</ul>
+<h3 id="以Leaks为例，介绍工具使用"><a href="#以Leaks为例，介绍工具使用" class="headerlink" title="以Leaks为例，介绍工具使用"></a>以Leaks为例，介绍工具使用</h3><p>在xcode里面新建一个工程，创建两个模型类，一个叫person，一个叫Animal，在person类里面创建一个Animal的属性，在Animal类里面创建一个Person属性。<br><img src="https://ibb.co/VVCyxWK" alt="Person类"><br><img src="https://ibb.co/x3QNNQ6" alt="Animal类"></p>
+<p>在控制器的touchesBegan方法里面创建创建两个类的对象<br><img src="https://ibb.co/Y22KPph" alt="创建对象"></p>
+<p>通过快捷键command + i 唤起界面以后选择Leaks<br><img src="https://ibb.co/7QVXc3K" alt="内存分析界面"></p>
+<p>左上角的红色圆圈点击一下就可以开始分析</p>
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
       
       
-      <section class="archives-wrap">
-        <div class="archive-year-wrap">
-          <a href="/archives/2018" class="archive-year">2018</a>
-        </div>
-        <div class="archives">
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2018/12/11/RunLoop初识/" class="archive-article-date">
-  	<time datetime="2018-12-11T08:49:07.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-12-11</time>
-</a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2018/12/11/RunLoop初识/">RunLoop初识</a>
-    </h1>
-  
-
-        <div class="article-info info-on-right">
-          
 	<div class="article-tag tagcloud">
 		<i class="icon-price-tags icon"></i>
 		<ul class="article-tag-list">
@@ -180,171 +218,119 @@
 		</ul>
 	</div>
 
-          
+      
 
+      
+
+      
+        
+<div class="share-btn share-icons tooltip-left">
+  <div class="tooltip tooltip-east">
+    <span class="tooltip-item">
+      <a href="javascript:;" class="share-sns share-outer">
+        <i class="icon icon-share"></i>
+      </a>
+    </span>
+    <span class="tooltip-content">
+      <div class="share-wrap">
+        <div class="share-icons">
+          <a class="weibo share-sns" href="javascript:;" data-type="weibo">
+            <i class="icon icon-weibo"></i>
+          </a>
+          <a class="weixin share-sns wxFab" href="javascript:;" data-type="weixin">
+            <i class="icon icon-weixin"></i>
+          </a>
+          <a class="qq share-sns" href="javascript:;" data-type="qq">
+            <i class="icon icon-qq"></i>
+          </a>
+          <a class="douban share-sns" href="javascript:;" data-type="douban">
+            <i class="icon icon-douban"></i>
+          </a>
+          <a class="qzone share-sns" href="javascript:;" data-type="qzone">
+            <i class="icon icon-qzone"></i>
+          </a>
+          <a class="facebook share-sns" href="javascript:;" data-type="facebook">
+            <i class="icon icon-facebook"></i>
+          </a>
+          <a class="twitter share-sns" href="javascript:;" data-type="twitter">
+            <i class="icon icon-twitter"></i>
+          </a>
+          <a class="google share-sns" href="javascript:;" data-type="google">
+            <i class="icon icon-google"></i>
+          </a>
         </div>
-        <div class="clearfix"></div>
-    </header>
+      </div>
+    </span>
+  </div>
+</div>
+
+<div class="page-modal wx-share js-wx-box">
+    <a class="close js-modal-close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <div class="wx-qrcode">
+      <img src="http://s.jiathis.com/qrcode.php?url=https://scotty-ke.github.io/2020/02/06/xcode动态调试工具/" alt="微信分享二维码">
+    </div>
+</div>
+
+<div class="mask js-mask"></div>
+      
+      <div class="clearfix"></div>
+    </div>
   </div>
 </article>
+
   
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2018/04/24/lldb的一些扩展用法/" class="archive-article-date">
-  	<time datetime="2018-04-24T09:19:40.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-04-24</time>
-</a>
+<nav id="article-nav">
+  
+  
+    <a href="/2018/12/11/RunLoop初识/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">RunLoop初识</div>
+      <i class="icon-circle-right"></i>
+    </a>
+  
+</nav>
+
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
         </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2018/04/24/lldb的一些扩展用法/">lldb的一些扩展用法</a>
-    </h1>
-  
-
-        <div class="article-info info-on-right">
-          
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">iOS</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-          
-
+        
+        
+        <div class="toc-container tooltip-left">
+            <i class="icon-font icon-category"></i>
+            <div class="tooltip tooltip-east">
+                <span class="tooltip-item">
+                </span>
+                <span class="tooltip-content">
+                    <div class="toc-article">
+                    <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#Instrument介绍"><span class="toc-number">1.</span> <span class="toc-text">Instrument介绍</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#instrument-常用模板"><span class="toc-number">2.</span> <span class="toc-text">instrument 常用模板</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#以Leaks为例，介绍工具使用"><span class="toc-number">3.</span> <span class="toc-text">以Leaks为例，介绍工具使用</span></a></li></ol>
+                    </div>
+                </span>
+            </div>
         </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
+        
+    </div>
+</aside>
+
+
+
   
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2018/03/29/Runtime浅应用/" class="archive-article-date">
-  	<time datetime="2018-03-29T07:49:14.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-03-29</time>
-</a>
-        </div>
-    	 
   
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2018/03/29/Runtime浅应用/">Runtime浅应用</a>
-    </h1>
   
 
-        <div class="article-info info-on-right">
-          
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">iOS</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-          
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2018/03/19/NSNumber-个性化/" class="archive-article-date">
-  	<time datetime="2018-03-19T03:36:50.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-03-19</time>
-</a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2018/03/19/NSNumber-个性化/">NSNumber 个性化</a>
-    </h1>
   
 
-        <div class="article-info info-on-right">
-          
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color2">ios 笔记</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-          
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2018/01/23/CocoaPods-制作属于自己的第三方/" class="archive-article-date">
-  	<time datetime="2018-01-23T07:54:02.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-01-23</time>
-</a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2018/01/23/CocoaPods-制作属于自己的第三方/">CocoaPods 制作属于自己的第三方</a>
-    </h1>
   
 
-        <div class="article-info info-on-right">
-          
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">iOS</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-          
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
   
-  
-    </div></section>
-  
-
-    
 
 
           </div>
@@ -367,8 +353,8 @@
 	var yiliaConfig = {
 		mathjax: false,
 		isHome: false,
-		isPost: false,
-		isArchive: true,
+		isPost: true,
+		isArchive: false,
 		isTag: false,
 		isCategory: false,
 		open_in_new: false,

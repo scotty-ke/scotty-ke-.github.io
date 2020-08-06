@@ -141,6 +141,104 @@
           <div id="js-content" class="content-ll">
             
   
+    <article id="post-xcode动态调试工具" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2020/02/06/xcode动态调试工具/">xcode动态调试工具</a>
+    </h1>
+  
+
+        
+        <a href="/2020/02/06/xcode动态调试工具/" class="archive-article-date">
+  	<time datetime="2020-02-06T11:21:08.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-02-06</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h3 id="Instrument介绍"><a href="#Instrument介绍" class="headerlink" title="Instrument介绍"></a>Instrument介绍</h3><p>instrument是xcode上的测试工具，用于分析OS X和iOS代码，可以帮助我们在开发过程中检测内存，分析性能，帮助我们开发出更高效的代码。</p>
+<p>在xcode中，我们可以通过工具栏中的Product-&gt;Profile(command + i)打开instrument界面，界面如下<br><img src="https://ibb.co/bPtq8CZ" alt="instrument界面"></p>
+<h3 id="instrument-常用模板"><a href="#instrument-常用模板" class="headerlink" title="instrument 常用模板"></a>instrument 常用模板</h3><ul>
+<li><p>Leaks（泄漏）：一般的查看内存使用情况，检查泄漏的内存，并提供了所有活动的分配和泄漏模块的类对象分配统计信息以及内存地址历史记录；</p>
+</li>
+<li><p>Time Profiler（时间探查）：执行对系统的 CPU上运行的进程低负载时间为基础采样。</p>
+</li>
+<li><p>Allocations（内存分配）：跟踪过程的匿名虚拟内存和堆的对象提供类名和可选保留/释放历史；</p>
+</li>
+<li></li>
+<li><p>Activity Monitor（活动监视器）：显示器处理的 CPU、内存和网络使用情况统计；</p>
+</li>
+<li><p>Blank（空模板）：创建一个空的模板，可以从Library 库中添加其他模板；</p>
+</li>
+<li><p>Automation（自动化）：这个模板执行它模拟用户界面交互为 iOS 手机应用从 instrument 启动的脚本；</p>
+</li>
+<li><p>Core Data：监测读取、缓存未命中、保存等操作，能直观显示是否保存次数远超实际需要。</p>
+</li>
+<li><p>Cocoa Layout：观察约束变化，找出布局代码的问题所在。</p>
+</li>
+<li><p>Network：跟踪 TCP/IP和 UDP/IP 连接。</p>
+</li>
+<li><p>Automations：创建和编辑测试脚本来自动化 iOS 应用的用户界面测试。</p>
+</li>
+</ul>
+<h3 id="以Leaks为例，介绍工具使用"><a href="#以Leaks为例，介绍工具使用" class="headerlink" title="以Leaks为例，介绍工具使用"></a>以Leaks为例，介绍工具使用</h3><p>在xcode里面新建一个工程，创建两个模型类，一个叫person，一个叫Animal，在person类里面创建一个Animal的属性，在Animal类里面创建一个Person属性。<br><img src="https://ibb.co/VVCyxWK" alt="Person类"><br><img src="https://ibb.co/x3QNNQ6" alt="Animal类"></p>
+<p>在控制器的touchesBegan方法里面创建创建两个类的对象<br><img src="https://ibb.co/Y22KPph" alt="创建对象"></p>
+<p>通过快捷键command + i 唤起界面以后选择Leaks<br><img src="https://ibb.co/7QVXc3K" alt="内存分析界面"></p>
+<p>左上角的红色圆圈点击一下就可以开始分析</p>
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">iOS</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+  
     <article id="post-RunLoop初识" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
     
@@ -1151,76 +1249,10 @@ NSLog(@&quot;%@&quot;,[numberFormatter stringFromNumber:@123456.7890]);  // !12,
 
 
   
-    <article id="post-First-Blog" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
   
-    <h1 itemprop="name">
-      <a class="article-title" href="/2017/09/20/First-Blog/">First Blog</a>
-    </h1>
-  
-
-        
-        <a href="/2017/09/20/First-Blog/" class="archive-article-date">
-  	<time datetime="2017-09-20T02:18:32.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2017-09-20</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p>   今天参照潘柏信大神的简书文章《HEXO+Github,搭建属于自己的博客》,一时兴起，想试一下搭建自己的个人博客，地址是<a href="http://www.jianshu.com/p/465830080ea9" target="_blank" rel="external">HEXO+Github,搭建属于自己的博客</a>,有兴趣的可以尝试一下。</p>
-
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">随笔</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-      
-
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
+    <nav id="page-nav">
+      <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><a class="extend next" rel="next" href="/page/2/">Next &raquo;</a>
+    </nav>
   
 
 
@@ -1310,11 +1342,11 @@ getOwnMetadataKeys:function(t){return o(i(t),arguments.length<2?void 0:u(argumen
           <ul class="article-tag-list" q-show="showTags">
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">iOS</a>
+                <a href="javascript:void(0)" class="js-tag color3">随笔</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">随笔</a>
+                <a href="javascript:void(0)" class="js-tag color4">iOS</a>
               </li>
              
               <li class="article-tag-list-item">
