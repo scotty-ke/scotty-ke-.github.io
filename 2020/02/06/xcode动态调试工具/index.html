@@ -8,23 +8,25 @@
   <link rel="dns-prefetch" href="https://scotty-ke.github.io">
   <title>xcode动态调试工具 | 我的博客</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="Instrument介绍instrument是xcode上的测试工具，用于分析OS X和iOS代码，可以帮助我们在开发过程中检测内存，分析性能，帮助我们开发出更高效的代码。 在xcode中，我们可以通过工具栏中的Product-&amp;gt;Profile(command + i)打开instrument界面，界面如下 instrument 常用模板 Leaks（泄漏）：一般的查看内存使用情况，检查泄漏">
+  <meta name="description" content="Instrument介绍instrument是xcode上的测试工具，用于分析OS X和iOS代码，可以帮助我们在开发过程中检测内存，分析性能，帮助我们开发出更高效的代码。 在xcode中，我们可以通过工具栏中的Product-&amp;gt;Profile(command + i)打开instrument界面，界面如下  instrument 常用模板 Leaks（泄漏）：一般的查看内存使用情况，检查泄">
 <meta name="keywords" content="iOS">
 <meta property="og:type" content="article">
 <meta property="og:title" content="xcode动态调试工具">
 <meta property="og:url" content="https://scotty-ke.github.io/2020/02/06/xcode动态调试工具/index.html">
 <meta property="og:site_name" content="我的博客">
-<meta property="og:description" content="Instrument介绍instrument是xcode上的测试工具，用于分析OS X和iOS代码，可以帮助我们在开发过程中检测内存，分析性能，帮助我们开发出更高效的代码。 在xcode中，我们可以通过工具栏中的Product-&amp;gt;Profile(command + i)打开instrument界面，界面如下 instrument 常用模板 Leaks（泄漏）：一般的查看内存使用情况，检查泄漏">
-<meta property="og:image" content="https://ibb.co/bPtq8CZ">
-<meta property="og:image" content="https://ibb.co/VVCyxWK">
-<meta property="og:image" content="https://ibb.co/x3QNNQ6">
-<meta property="og:image" content="https://ibb.co/Y22KPph">
-<meta property="og:image" content="https://ibb.co/7QVXc3K">
-<meta property="og:updated_time" content="2020-08-06T12:57:51.323Z">
+<meta property="og:description" content="Instrument介绍instrument是xcode上的测试工具，用于分析OS X和iOS代码，可以帮助我们在开发过程中检测内存，分析性能，帮助我们开发出更高效的代码。 在xcode中，我们可以通过工具栏中的Product-&amp;gt;Profile(command + i)打开instrument界面，界面如下  instrument 常用模板 Leaks（泄漏）：一般的查看内存使用情况，检查泄">
+<meta property="og:image" content="http://a1.qpic.cn/psc?/V140XCjK03XHwT/bqQfVz5yrrGYSXMvKr.cqbCOceBn*ecXi06u66T8b6YffPMtfvYN*IcyFa3mvgNRMerJPSvbdmd47n2pHowEQ9ehHfRhyr4W40t9mnobxOU!/m&ek=1&kp=1&pt=0&bo=BAZiBQQGYgUDEDU!&tl=1&vuin=876961778&tm=1596762000&sce=60-4-3&rf=0-0">
+<meta property="og:image" content="http://a1.qpic.cn/psc?/V140XCjK03XHwT/bqQfVz5yrrGYSXMvKr.cqSasrs*NBccdimrj806IPn7mdme.Nn435edwwK6.RR7EPSO126ydPb9HhR1IVYW4*928cUsHkMtRONI4FlsYTEM!/m&ek=1&kp=1&pt=0&bo=rAmyBawJsgURECc!&tl=1&vuin=876961778&tm=1596762000&sce=60-4-3&rf=0-0">
+<meta property="og:image" content="http://a1.qpic.cn/psc?/V140XCjK03XHwT/bqQfVz5yrrGYSXMvKr.cqXmmjLeHk3fy5T5Sfe0ODBd9EFoC2mAQQ2n97DONGEL2qcI07WyDlN3U50I6ieLnUvGdBlKUdiJjM.mf1L*vsd0!/m&ek=1&kp=1&pt=0&bo=rAmyBawJsgURECc!&tl=1&vuin=876961778&tm=1596762000&sce=60-4-3&rf=0-0">
+<meta property="og:image" content="http://a1.qpic.cn/psc?/V140XCjK03XHwT/bqQfVz5yrrGYSXMvKr.cqSADMEhH7sJkkIdL5gz6Iv3Uo7e3kUTMNSZbPpHrXjGhcgE*9AiEh1wVbqt9vXRD67OdY.fgyDYlyjHquiCf1LI!/b&ek=1&kp=1&pt=0&bo=pgmwBaYJsAURECc!&tl=1&vuin=876961778&tm=1596762000&sce=60-4-3&rf=viewer_311">
+<meta property="og:image" content="http://a1.qpic.cn/psc?/V140XCjK03XHwT/bqQfVz5yrrGYSXMvKr.cqZWwoYSDddtNL2zZAKHPKe0WL9Kt299sRO3ATkLOU9DBjgO4y8Vm*5F5bg5h9T2d6Djm9hYoE51mvqxUomrqJmU!/b&ek=1&kp=1&pt=0&bo=1gTZAtYE2QIDEDU!&tl=1&vuin=876961778&tm=1596762000&sce=50-1-1&rf=viewer_311">
+<meta property="og:image" content="http://a1.qpic.cn/psc?/V140XCjK03XHwT/bqQfVz5yrrGYSXMvKr.cqVlFhGa07V2hnt7V2dip0CMUGDFY12JE*3AoN0BOWWQRbNIJbgpH9WT1DaYYOFLvH1RHLnPhWUIoGU6Nn3DNWU4!/b&ek=1&kp=1&pt=0&bo=2ATaAtgE2gIDEDU!&tl=1&vuin=876961778&tm=1596762000&sce=60-1-1&rf=viewer_311">
+<meta property="og:image" content="http://a1.qpic.cn/psc?/V140XCjK03XHwT/bqQfVz5yrrGYSXMvKr.cqdbamEkerbIhS.9.nrAzcpEPJT3mD5c0zcyjQtfjBmaATk5mwpHe0Cq9jfDZfE.ih5Tnnmp2V9cidXB2xVsj.bY!/b&ek=1&kp=1&pt=0&bo=rAmyBawJsgURECc!&tl=1&vuin=876961778&tm=1596762000&sce=60-4-3&rf=viewer_311">
+<meta property="og:updated_time" content="2020-08-07T02:01:59.113Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="xcode动态调试工具">
-<meta name="twitter:description" content="Instrument介绍instrument是xcode上的测试工具，用于分析OS X和iOS代码，可以帮助我们在开发过程中检测内存，分析性能，帮助我们开发出更高效的代码。 在xcode中，我们可以通过工具栏中的Product-&amp;gt;Profile(command + i)打开instrument界面，界面如下 instrument 常用模板 Leaks（泄漏）：一般的查看内存使用情况，检查泄漏">
-<meta name="twitter:image" content="https://ibb.co/bPtq8CZ">
+<meta name="twitter:description" content="Instrument介绍instrument是xcode上的测试工具，用于分析OS X和iOS代码，可以帮助我们在开发过程中检测内存，分析性能，帮助我们开发出更高效的代码。 在xcode中，我们可以通过工具栏中的Product-&amp;gt;Profile(command + i)打开instrument界面，界面如下  instrument 常用模板 Leaks（泄漏）：一般的查看内存使用情况，检查泄">
+<meta name="twitter:image" content="http://a1.qpic.cn/psc?/V140XCjK03XHwT/bqQfVz5yrrGYSXMvKr.cqbCOceBn*ecXi06u66T8b6YffPMtfvYN*IcyFa3mvgNRMerJPSvbdmd47n2pHowEQ9ehHfRhyr4W40t9mnobxOU!/m&ek=1&kp=1&pt=0&bo=BAZiBQQGYgUDEDU!&tl=1&vuin=876961778&tm=1596762000&sce=60-4-3&rf=0-0">
   
     <link rel="alternative" href="/atom.xml" title="我的博客" type="application/atom+xml">
   
@@ -171,7 +173,8 @@
     <div class="article-entry" itemprop="articleBody">
       
         <h3 id="Instrument介绍"><a href="#Instrument介绍" class="headerlink" title="Instrument介绍"></a>Instrument介绍</h3><p>instrument是xcode上的测试工具，用于分析OS X和iOS代码，可以帮助我们在开发过程中检测内存，分析性能，帮助我们开发出更高效的代码。</p>
-<p>在xcode中，我们可以通过工具栏中的Product-&gt;Profile(command + i)打开instrument界面，界面如下<br><img src="https://ibb.co/bPtq8CZ" alt="instrument界面"></p>
+<p>在xcode中，我们可以通过工具栏中的Product-&gt;Profile(command + i)打开instrument界面，界面如下</p>
+<p><img src="http://a1.qpic.cn/psc?/V140XCjK03XHwT/bqQfVz5yrrGYSXMvKr.cqbCOceBn*ecXi06u66T8b6YffPMtfvYN*IcyFa3mvgNRMerJPSvbdmd47n2pHowEQ9ehHfRhyr4W40t9mnobxOU!/m&amp;ek=1&amp;kp=1&amp;pt=0&amp;bo=BAZiBQQGYgUDEDU!&amp;tl=1&amp;vuin=876961778&amp;tm=1596762000&amp;sce=60-4-3&amp;rf=0-0" alt="instrument界面"></p>
 <h3 id="instrument-常用模板"><a href="#instrument-常用模板" class="headerlink" title="instrument 常用模板"></a>instrument 常用模板</h3><ul>
 <li><p>Leaks（泄漏）：一般的查看内存使用情况，检查泄漏的内存，并提供了所有活动的分配和泄漏模块的类对象分配统计信息以及内存地址历史记录；</p>
 </li>
@@ -195,10 +198,19 @@
 <li><p>Automations：创建和编辑测试脚本来自动化 iOS 应用的用户界面测试。</p>
 </li>
 </ul>
-<h3 id="以Leaks为例，介绍工具使用"><a href="#以Leaks为例，介绍工具使用" class="headerlink" title="以Leaks为例，介绍工具使用"></a>以Leaks为例，介绍工具使用</h3><p>在xcode里面新建一个工程，创建两个模型类，一个叫person，一个叫Animal，在person类里面创建一个Animal的属性，在Animal类里面创建一个Person属性。<br><img src="https://ibb.co/VVCyxWK" alt="Person类"><br><img src="https://ibb.co/x3QNNQ6" alt="Animal类"></p>
-<p>在控制器的touchesBegan方法里面创建创建两个类的对象<br><img src="https://ibb.co/Y22KPph" alt="创建对象"></p>
-<p>通过快捷键command + i 唤起界面以后选择Leaks<br><img src="https://ibb.co/7QVXc3K" alt="内存分析界面"></p>
-<p>左上角的红色圆圈点击一下就可以开始分析</p>
+<h3 id="以Leaks为例，介绍工具使用"><a href="#以Leaks为例，介绍工具使用" class="headerlink" title="以Leaks为例，介绍工具使用"></a>以Leaks为例，介绍工具使用</h3><p>在xcode里面新建一个工程，创建两个模型类，一个叫person，一个叫Animal，在person类里面创建一个Animal的属性，在Animal类里面创建一个Person属性。在控制器的touchesBegan方法里面创建创建两个类的对象</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line">- (void)touchesBegan:(NSSet&lt;UITouch *&gt; *)touches withEvent:(UIEvent *)event</div><div class="line">&#123;</div><div class="line">    Person *p = [Person new];</div><div class="line">    </div><div class="line">    Animal *animal = [Animal new];</div><div class="line">    </div><div class="line">    p.Dog = animal;</div><div class="line">    animal.person = p;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>通过快捷键command + i 唤起界面以后选择Leaks<br><img src="http://a1.qpic.cn/psc?/V140XCjK03XHwT/bqQfVz5yrrGYSXMvKr.cqSasrs*NBccdimrj806IPn7mdme.Nn435edwwK6.RR7EPSO126ydPb9HhR1IVYW4*928cUsHkMtRONI4FlsYTEM!/m&amp;ek=1&amp;kp=1&amp;pt=0&amp;bo=rAmyBawJsgURECc!&amp;tl=1&amp;vuin=876961778&amp;tm=1596762000&amp;sce=60-4-3&amp;rf=0-0" alt="内存分析界面"></p>
+<p>左上角的红色圆圈点击一下就可以开始分析，程序运行起来以后，因为我们在touchesBegan里面写了错误代码，所以就会发现当程序刚起来的时候，第一次检测会显示一个绿色的对号，当点击了屏幕以后，会出现一个红色的叉号（PS：在界面的上面，我们能看到一个时间间隔的条，没10秒分一份，这个分析并不是实时的，他是每10秒就遍历一遍，如果有错误，就显示出来，所以点击的时候可能不会立马出现反应，要等待一个时间周期才能看到结果）</p>
+<p><img src="http://a1.qpic.cn/psc?/V140XCjK03XHwT/bqQfVz5yrrGYSXMvKr.cqXmmjLeHk3fy5T5Sfe0ODBd9EFoC2mAQQ2n97DONGEL2qcI07WyDlN3U50I6ieLnUvGdBlKUdiJjM.mf1L*vsd0!/m&amp;ek=1&amp;kp=1&amp;pt=0&amp;bo=rAmyBawJsgURECc!&amp;tl=1&amp;vuin=876961778&amp;tm=1596762000&amp;sce=60-4-3&amp;rf=0-0" alt="错误信息"></p>
+<p>这个时候我们点击下面那一条分析的轨道，就能在最下面看到错误信息，查看错误信息的方式有三种，我们可以选择自己喜欢的方式进行查看<br><img src="http://a1.qpic.cn/psc?/V140XCjK03XHwT/bqQfVz5yrrGYSXMvKr.cqSADMEhH7sJkkIdL5gz6Iv3Uo7e3kUTMNSZbPpHrXjGhcgE*9AiEh1wVbqt9vXRD67OdY.fgyDYlyjHquiCf1LI!/b&amp;ek=1&amp;kp=1&amp;pt=0&amp;bo=pgmwBaYJsAURECc!&amp;tl=1&amp;vuin=876961778&amp;tm=1596762000&amp;sce=60-4-3&amp;rf=viewer_311" alt="切换查看方式"></p>
+<p>当我们在选择Call Tree的时候，为了更方便我们找到自己程序出错的具体位置，我们可以勾选一个选项，可以帮我们过滤掉系统调用的方法</p>
+<p><img src="http://a1.qpic.cn/psc?/V140XCjK03XHwT/bqQfVz5yrrGYSXMvKr.cqZWwoYSDddtNL2zZAKHPKe0WL9Kt299sRO3ATkLOU9DBjgO4y8Vm*5F5bg5h9T2d6Djm9hYoE51mvqxUomrqJmU!/b&amp;ek=1&amp;kp=1&amp;pt=0&amp;bo=1gTZAtYE2QIDEDU!&amp;tl=1&amp;vuin=876961778&amp;tm=1596762000&amp;sce=50-1-1&amp;rf=viewer_311" alt="勾选前"></p>
+<p><img src="http://a1.qpic.cn/psc?/V140XCjK03XHwT/bqQfVz5yrrGYSXMvKr.cqVlFhGa07V2hnt7V2dip0CMUGDFY12JE*3AoN0BOWWQRbNIJbgpH9WT1DaYYOFLvH1RHLnPhWUIoGU6Nn3DNWU4!/b&amp;ek=1&amp;kp=1&amp;pt=0&amp;bo=2ATaAtgE2gIDEDU!&amp;tl=1&amp;vuin=876961778&amp;tm=1596762000&amp;sce=60-1-1&amp;rf=viewer_311" alt="勾选后"></p>
+<p>对比上面两个图片，我们就可以发现，勾选以后，下面显示的信息就只剩下我们自己调用的方法，能更快的定位到错误。</p>
+<p>当我们找到出错的地方只有，只要点击一下错误信息，这个时候，就会自动帮我们定位到错误代码的具体位置，</p>
+<p><img src="http://a1.qpic.cn/psc?/V140XCjK03XHwT/bqQfVz5yrrGYSXMvKr.cqdbamEkerbIhS.9.nrAzcpEPJT3mD5c0zcyjQtfjBmaATk5mwpHe0Cq9jfDZfE.ih5Tnnmp2V9cidXB2xVsj.bY!/b&amp;ek=1&amp;kp=1&amp;pt=0&amp;bo=rAmyBawJsgURECc!&amp;tl=1&amp;vuin=876961778&amp;tm=1596762000&amp;sce=60-4-3&amp;rf=viewer_311" alt="错误代码"></p>
+<p>其他工具的使用方法类似，有时间可以都测试一下。</p>
 
       
 
@@ -419,11 +431,11 @@ getOwnMetadataKeys:function(t){return o(i(t),arguments.length<2?void 0:u(argumen
           <ul class="article-tag-list" q-show="showTags">
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">随笔</a>
+                <a href="javascript:void(0)" class="js-tag color4">iOS</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">iOS</a>
+                <a href="javascript:void(0)" class="js-tag color3">随笔</a>
               </li>
              
               <li class="article-tag-list-item">
